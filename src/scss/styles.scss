@@ -1,0 +1,8 @@
+@import "~bootstrap/scss/bootstrap";
+.form-floating > .form-control::placeholder {
+  color: revert;
+}
+
+.form-floating > .form-control:not(:focus)::placeholder {
+  color: transparent;
+}
