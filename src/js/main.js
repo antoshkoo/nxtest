@@ -10,7 +10,7 @@ copyBtn.addEventListener("click", () => {
 });
 
 const formSailing = document.getElementById("formSailing");
-formSailing.addEventListener("change", () => {
+formSailing.addEventListener("input", () => {
   let formEntities = {};
   const formData = new FormData(formSailing);
 
