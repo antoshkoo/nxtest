@@ -1,16 +1,17 @@
+"use strict";
 import "../scss/styles.scss";
-// import * as bootstrap from "bootstrap";
 import { Tab, Card } from "bootstrap";
+import { saveAs } from "file-saver";
 
-// const fs = require("fs");
 let currentPage = "Sailing";
-let copyTextarea, saveBtn, copyBtn, mailBtn, form;
+let copyTextarea, saveBtn, copyBtn, saveAndMailBtn, form;
+const _email = "bali@example.com";
 
 const getElements = (page) => {
   copyTextarea = document.getElementById(`copyTextarea${page}`);
   saveBtn = document.getElementById(`saveBtn${page}`);
   copyBtn = document.getElementById(`copyBtn${page}`);
-  mailBtn = document.getElementById(`mailBtn${page}`);
+  saveAndMailBtn = document.getElementById(`mailBtn${page}`);
   form = document.getElementById(`form${page}`);
 };
 
@@ -24,7 +25,16 @@ const setListeners = () => {
     copyTextarea.innerText = getFormData();
   });
 
-  saveBtn.addEventListener("click", () => setVesselToLocalStorage());
+  saveBtn.addEventListener("click", () => {
+    setVesselToLocalStorage();
+    saveReport();
+  });
+
+  saveAndMailBtn.addEventListener("click", () => {
+    setVesselToLocalStorage();
+    saveReport();
+    sendMail();
+  });
 };
 
 const getVesselData = () => {
@@ -60,6 +70,27 @@ const getFormData = () => {
   return JSON.stringify(data);
 };
 
+const saveReport = () => {
+  const data = getFormData();
+  const fileName = getReportName();
+  const file = new File([data], fileName, {
+    type: "application/json",
+  });
+  saveAs(file);
+};
+
+const getReportName = () => {
+  const date = new Intl.DateTimeFormat("locale", {
+    dateStyle: "short",
+    timeStyle: "short",
+  })
+    .format(new Date())
+    .replaceAll("/", ".")
+    .replace(":", "-")
+    .replace(",", " ");
+  return `${currentPage} - ${date}`;
+};
+
 const pages = document.querySelectorAll(".nav-link");
 pages.forEach((page) => {
   page.addEventListener("click", () => {
@@ -69,12 +100,18 @@ pages.forEach((page) => {
   });
 });
 
+const sendMail = () => {
+  const reportName = getReportName();
+  return (window.location.href = `mailto:${_email}?subject=${reportName}`);
+};
+
 getElements(currentPage);
 setListeners();
 
 document.addEventListener("DOMContentLoaded", () => {
   if (currentPage !== "Sailing") return;
   const data = getVesselFromLocalStorage();
+  document.getElementById("reportType").value = currentPage || "";
   document.getElementById("vesselName").value = data.vesselName || "";
   document.getElementById("vesselImo").value = data.vesselImo || "";
   document.getElementById("vesselMmsi").value = data.vesselMmsi || "";

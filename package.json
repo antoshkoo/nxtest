@@ -27,6 +27,7 @@
   "dependencies": {
     "@popperjs/core": "^2.11.6",
     "air-datepicker": "^3.3.5",
-    "bootstrap": "^5.2.3"
+    "bootstrap": "^5.2.3",
+    "file-saver": "^2.0.5"
   }
 }
