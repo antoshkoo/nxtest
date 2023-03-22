@@ -6,7 +6,7 @@ import { saveAs } from "file-saver";
 let currentPage = "Sailing";
 let copyTextarea, saveBtn, copyBtn, saveAndMailBtn, loadBtn, loadInput, form;
 
-const _email = "bali@example.com";
+const _email = "bali@ogo-ogo.com";
 
 const getElements = (page) => {
   copyTextarea = document.getElementById(`copyTextarea${page}`);
@@ -30,12 +30,14 @@ const setListeners = () => {
 
   saveBtn.addEventListener("click", () => {
     setVesselToLocalStorage();
+    setReportToLocalStorage();
     saveReport();
   });
 
   saveAndMailBtn.addEventListener("click", () => {
     setVesselToLocalStorage();
     saveReport();
+    setReportToLocalStorage();
     sendMail();
   });
 
@@ -50,13 +52,17 @@ const setListeners = () => {
   document.addEventListener("DOMContentLoaded", () => {
     if (currentPage !== "Sailing") return;
     const data = getVesselFromLocalStorage();
-    document.getElementById("reportType").value = currentPage || "";
+    document.getElementById("reportType").value = currentPage;
     document.getElementById("vesselName").value = data.vesselName || "";
     document.getElementById("vesselImo").value = data.vesselImo || "";
     document.getElementById("vesselMmsi").value = data.vesselMmsi || "";
     document.getElementById("vesselLocalTime").value =
       data.vesselLocalTime || "";
     copyTextarea.innerText = getFormData();
+    const lastReports = JSON.parse(localStorage.getItem("reports")) || {};
+    if (lastReports[currentPage]) {
+      setLoadedDataToForm(lastReports[currentPage]);
+    }
   });
 };
 
@@ -84,6 +90,13 @@ const getVesselFromLocalStorage = () => {
   if (currentPage !== "Sailing") return;
   const vesselData = JSON.parse(localStorage.getItem("vessel"));
   return vesselData;
+};
+
+const setReportToLocalStorage = () => {
+  const currentData = JSON.parse(localStorage.getItem("reports")) || {};
+  const data = JSON.parse(getFormData());
+  currentData[currentPage.toString()] = data;
+  localStorage.setItem("reports", JSON.stringify(currentData));
 };
 
 const getFormData = () => {
@@ -122,7 +135,6 @@ const sendMail = () => {
       (document.location.href = `mailto:${_email}?subject=${reportName}&body=${getFormData()}`),
     250
   );
-  // return (document.location.href = `mailto:${_email}?subject=${reportName}&body=${getFormData()}`);
 };
 
 const loadReport = () => {
