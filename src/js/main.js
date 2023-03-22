@@ -2,21 +2,39 @@ import "../scss/styles.scss";
 // import * as bootstrap from "bootstrap";
 import { Tab, Card } from "bootstrap";
 
-const copyTextarea = document.getElementById("copyTextarea");
-const copyBtn = document.getElementById("copyBtn");
-copyBtn.addEventListener("click", () => {
-  copyTextarea.select();
-  document.execCommand("copy");
+let currentPage = "Sailing";
+let copyTextarea, saveBtn, copyBtn, mailBtn, form;
+
+const getElements = (page) => {
+  copyTextarea = document.getElementById(`copyTextarea${page}`);
+  saveBtn = document.getElementById(`saveBtn${page}`);
+  copyBtn = document.getElementById(`copyBtn${page}`);
+  mailBtn = document.getElementById(`mailBtn${page}`);
+  form = document.getElementById(`form${page}`);
+};
+
+const setListeners = () => {
+  copyBtn.addEventListener("click", () => {
+    copyTextarea.select();
+    document.execCommand("copy");
+  });
+
+  form.addEventListener("input", () => {
+    const fd = new FormData(form);
+    const data = Object.fromEntries(fd);
+    delete data.copyTextarea;
+    copyTextarea.innerText = JSON.stringify(data);
+  });
+};
+
+const pages = document.querySelectorAll(".nav-link");
+pages.forEach((page) => {
+  page.addEventListener("click", () => {
+    currentPage = page.id;
+    getElements(currentPage);
+    setListeners();
+  });
 });
 
-const formSailing = document.getElementById("formSailing");
-formSailing.addEventListener("input", () => {
-  let formEntities = {};
-  const formData = new FormData(formSailing);
-
-  for (const elem of formData.entries()) {
-    formEntities[elem[0]] = elem[1];
-  }
-  delete formEntities.copyTextarea;
-  copyTextarea.innerText = JSON.stringify(formEntities);
-});
+getElements(currentPage);
+setListeners();

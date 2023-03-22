@@ -1,4 +1,7 @@
 @import "~bootstrap/scss/bootstrap";
+h6 {
+  margin: 0;
+}
 .form-floating > .form-control::placeholder {
   color: revert;
 }
