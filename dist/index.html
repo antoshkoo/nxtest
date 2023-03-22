@@ -221,7 +221,7 @@
                         >Observe date, local time</label
                       >
                       <input
-                        type="text"
+                        type="datetime-local"
                         class="form-control"
                         id="vesselLocalTime"
                         name="vesselLocalTime"
@@ -285,7 +285,7 @@
                                 >ETA (Destination time)</label
                               >
                               <input
-                                type="text"
+                                type="datetime-local"
                                 class="form-control"
                                 id="eta"
                                 name="eta"
@@ -311,7 +311,7 @@
                                 >ETA (Destination time)</label
                               >
                               <input
-                                type="text"
+                                type="datetime-local"
                                 class="form-control"
                                 id="etaNextRiverCanal"
                                 name="etaNextRiverCanal"
@@ -438,7 +438,7 @@
                   ></textarea>
                   <div class="d-flex flex-column gap-3">
                     <div class="row">
-                      <div class="col-6">
+                      <div class="col-4">
                         <button
                           type="button"
                           class="btn btn-success w-100"
@@ -447,13 +447,22 @@
                           Copy
                         </button>
                       </div>
-                      <div class="col-6">
+                      <div class="col-4">
                         <button
                           type="button"
                           class="btn btn-primary w-100"
                           id="saveBtnSailing"
                         >
                           Save
+                        </button>
+                      </div>
+                      <div class="col-4">
+                        <button
+                          type="button"
+                          class="btn btn-outline-dark w-100"
+                          id="loadBtnSailing"
+                        >
+                          Load
                         </button>
                       </div>
                     </div>
@@ -468,6 +477,12 @@
                 </div>
               </div>
               <input type="hidden" name="reportType" id="reportType" />
+              <input
+                type="file"
+                name="loadInputSailing"
+                id="loadInputSailing"
+                class="d-none"
+              />
             </form>
           </div>
           <!-- //Sailing -->

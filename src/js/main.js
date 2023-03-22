@@ -4,7 +4,8 @@ import { Tab, Card } from "bootstrap";
 import { saveAs } from "file-saver";
 
 let currentPage = "Sailing";
-let copyTextarea, saveBtn, copyBtn, saveAndMailBtn, form;
+let copyTextarea, saveBtn, copyBtn, saveAndMailBtn, loadBtn, loadInput, form;
+
 const _email = "bali@example.com";
 
 const getElements = (page) => {
@@ -12,6 +13,8 @@ const getElements = (page) => {
   saveBtn = document.getElementById(`saveBtn${page}`);
   copyBtn = document.getElementById(`copyBtn${page}`);
   saveAndMailBtn = document.getElementById(`mailBtn${page}`);
+  loadBtn = document.getElementById(`loadBtn${page}`);
+  loadInput = document.getElementById(`loadInput${currentPage}`);
   form = document.getElementById(`form${page}`);
 };
 
@@ -34,6 +37,26 @@ const setListeners = () => {
     setVesselToLocalStorage();
     saveReport();
     sendMail();
+  });
+
+  loadBtn.addEventListener("click", () => {
+    loadInput.click();
+  });
+
+  loadInput.addEventListener("change", () => {
+    loadReport();
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    if (currentPage !== "Sailing") return;
+    const data = getVesselFromLocalStorage();
+    document.getElementById("reportType").value = currentPage || "";
+    document.getElementById("vesselName").value = data.vesselName || "";
+    document.getElementById("vesselImo").value = data.vesselImo || "";
+    document.getElementById("vesselMmsi").value = data.vesselMmsi || "";
+    document.getElementById("vesselLocalTime").value =
+      data.vesselLocalTime || "";
+    copyTextarea.innerText = getFormData();
   });
 };
 
@@ -67,6 +90,7 @@ const getFormData = () => {
   const fd = new FormData(form);
   const data = Object.fromEntries(fd);
   delete data.copyTextarea;
+  delete data[loadInput.id];
   return JSON.stringify(data);
 };
 
@@ -91,6 +115,46 @@ const getReportName = () => {
   return `${currentPage} - ${date}`;
 };
 
+const sendMail = () => {
+  const reportName = getReportName();
+  setTimeout(
+    () =>
+      (document.location.href = `mailto:${_email}?subject=${reportName}&body=${getFormData()}`),
+    250
+  );
+  // return (document.location.href = `mailto:${_email}?subject=${reportName}&body=${getFormData()}`);
+};
+
+const loadReport = () => {
+  const report = loadInput.files[0];
+  if (!loadInput.files[0]) return;
+  const reader = new FileReader();
+  reader.readAsText(report);
+  reader.onload = () => {
+    try {
+      const result = JSON.parse(reader.result);
+      setLoadedDataToForm(result);
+    } catch (e) {
+      alert("Report invalid format");
+    }
+  };
+  reader.onerror = () => {
+    console.log(reader.error);
+  };
+};
+
+const setLoadedDataToForm = (data) => {
+  if (data.reportType !== currentPage) {
+    alert("Invalid report type");
+    return;
+  }
+  for (let key in data) {
+    if (data.key === "") return;
+    document.getElementById(key).value = data[key];
+    copyTextarea.innerText = getFormData();
+  }
+};
+
 const pages = document.querySelectorAll(".nav-link");
 pages.forEach((page) => {
   page.addEventListener("click", () => {
@@ -100,21 +164,5 @@ pages.forEach((page) => {
   });
 });
 
-const sendMail = () => {
-  const reportName = getReportName();
-  return (window.location.href = `mailto:${_email}?subject=${reportName}`);
-};
-
 getElements(currentPage);
 setListeners();
-
-document.addEventListener("DOMContentLoaded", () => {
-  if (currentPage !== "Sailing") return;
-  const data = getVesselFromLocalStorage();
-  document.getElementById("reportType").value = currentPage || "";
-  document.getElementById("vesselName").value = data.vesselName || "";
-  document.getElementById("vesselImo").value = data.vesselImo || "";
-  document.getElementById("vesselMmsi").value = data.vesselMmsi || "";
-  document.getElementById("vesselLocalTime").value = data.vesselLocalTime || "";
-  copyTextarea.innerText = getFormData();
-});
