@@ -21,7 +21,7 @@ const getElements = (page) => {
 const setListeners = () => {
   copyBtn.addEventListener("click", () => {
     copyTextarea.select();
-    document.execCommand("copy");
+    navigator.clipboard.writeText(copyTextarea.value);
   });
 
   form.addEventListener("input", () => {
@@ -36,8 +36,8 @@ const setListeners = () => {
 
   saveAndMailBtn.addEventListener("click", () => {
     setVesselToLocalStorage();
-    saveReport();
     setReportToLocalStorage();
+    saveReport();
     sendMail();
   });
 
