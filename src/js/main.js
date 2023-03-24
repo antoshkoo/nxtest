@@ -50,7 +50,6 @@ const setListeners = () => {
   });
 
   document.addEventListener("DOMContentLoaded", () => {
-    if (currentPage !== "Sailing") return;
     const data = getVesselFromLocalStorage();
     document.getElementById("reportType").value = currentPage;
     document.getElementById("vesselName").value = data.vesselName || "";
@@ -67,27 +66,31 @@ const setListeners = () => {
 };
 
 const getVesselData = () => {
-  const vesselName = document.getElementById("vesselName").value || "";
-  const vesselIMO = document.getElementById("vesselImo").value || "";
-  const vesselMmsi = document.getElementById("vesselMmsi").value || "";
+  const vesselName =
+    document.querySelector(`#form${currentPage} #vesselName`).value || "";
+  const vesselIMO =
+    document.querySelector(`#form${currentPage} #vesselImo`).value || "";
+  const vesselMmsi =
+    document.querySelector(`#form${currentPage} #vesselMmsi`).value || "";
   const vesselLocalTime =
-    document.getElementById("vesselLocalTime").value || "";
+    document.querySelector(`#form${currentPage} #vesselLocalTime`).value || "";
+  const voyageNumber =
+    document.querySelector(`#form${currentPage} #voyageNumber`).value || "";
   return {
     vesselName: vesselName,
     vesselImo: vesselIMO,
     vesselMmsi: vesselMmsi,
     vesselLocalTime: vesselLocalTime,
+    voyageNumber: voyageNumber,
   };
 };
 
 const setVesselToLocalStorage = () => {
-  if (currentPage !== "Sailing") return;
   const vesselData = getVesselData();
   localStorage.setItem("vessel", JSON.stringify(vesselData));
 };
 
 const getVesselFromLocalStorage = () => {
-  if (currentPage !== "Sailing") return;
   const vesselData = JSON.parse(localStorage.getItem("vessel"));
   return vesselData;
 };
@@ -162,7 +165,8 @@ const setLoadedDataToForm = (data) => {
   }
   for (let key in data) {
     if (data.key === "") return;
-    document.getElementById(key).value = data[key];
+    const elem = document.querySelector(`#form${currentPage} #${key}`) || false;
+    if (elem) elem.value = data[key];
     copyTextarea.innerText = getFormData();
   }
 };
@@ -173,6 +177,24 @@ pages.forEach((page) => {
     currentPage = page.id;
     getElements(currentPage);
     setListeners();
+    const data = getVesselFromLocalStorage();
+    document.querySelector(`#form${currentPage} #reportType`).value =
+      currentPage;
+    document.querySelector(`#form${currentPage} #vesselName`).value =
+      data.vesselName || "";
+    document.querySelector(`#form${currentPage} #vesselImo`).value =
+      data.vesselImo || "";
+    document.querySelector(`#form${currentPage} #vesselMmsi`).value =
+      data.vesselMmsi || "";
+    document.querySelector(`#form${currentPage} #vesselLocalTime`).value =
+      data.vesselLocalTime || "";
+    document.querySelector(`#form${currentPage} #voyageNumber`).value =
+      data.voyageNumber || "";
+    copyTextarea.innerText = getFormData();
+    const lastReports = JSON.parse(localStorage.getItem("reports")) || {};
+    if (lastReports[currentPage]) {
+      setLoadedDataToForm(lastReports[currentPage]);
+    }
   });
 });
 
