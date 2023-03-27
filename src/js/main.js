@@ -29,12 +29,14 @@ const setListeners = () => {
   });
 
   saveBtn.addEventListener("click", () => {
+    if (!form.checkValidity()) return;
     setVesselToLocalStorage();
     setReportToLocalStorage();
     saveReport();
   });
 
   saveAndMailBtn.addEventListener("click", () => {
+    if (!form.checkValidity()) return;
     setVesselToLocalStorage();
     setReportToLocalStorage();
     saveReport();
@@ -197,6 +199,133 @@ pages.forEach((page) => {
     }
   });
 });
+
+/* везде в масках применяем точку */
+/*  IMO 7 цифр */
+const inputImo = document.querySelector(`#form${currentPage} .imo-input`);
+const spanImo = document.querySelector(`#form${currentPage} .imo-span`);
+inputImo?.addEventListener("input", function () {
+  const split = splitDot(inputImo.value);
+  addAlertColor(
+    inputImo.value.match(inputImo.pattern) && inputImo.value.length <= 7,
+    spanImo,
+    "Введите 7 цифр"
+  );
+});
+
+/*  distance travelled from last report - XXXXXX.XX */
+const inputDist = document.querySelector(".dist-input");
+const spanDist = document.querySelector(".dist-span");
+inputDist?.addEventListener("input", function () {
+  const split = splitDot(inputDist.value);
+  addAlertColor(
+    inputDist.value.match(inputDist.pattern) &&
+      split[0]?.length <= 6 &&
+      split[1]?.length <= 2,
+    spanDist,
+    "Введите в формате XXXXXX.XX"
+  );
+});
+
+/*  Средняя скорость/средние обороты - XX.XX */
+const inputMedium = document.querySelector(".medium-input");
+const spanMedium = document.querySelector(".medium-span");
+inputMedium?.addEventListener("input", function () {
+  const split = splitDot(inputMedium.value);
+  addAlertColor(
+    inputMedium.value.match(inputMedium.pattern) &&
+      split[0].length <= 2 &&
+      split[1].length <= 2,
+    spanMedium,
+    "Введите в формате XX.XX"
+  );
+});
+
+/*  Для топлива - XXXX.XXX */
+const inputFuel = document.querySelector(".fuel-input");
+const spanFuel = document.querySelector(".fuel-span");
+inputFuel?.addEventListener("input", function () {
+  const split = splitDot(inputFuel.value);
+  addAlertColor(
+    inputFuel.value.match(inputFuel.pattern) &&
+      split[0]?.length <= 4 &&
+      split[1]?.length <= 3,
+    spanFuel,
+    "Введите в формате XXXX.XXX"
+  );
+});
+
+/*  Для cargo - XXXXXXXX.XXX */
+const inputCargo = document.querySelector(".cargo-input");
+const spanCargo = document.querySelector(".cargo-span");
+inputCargo?.addEventListener("input", function () {
+  const split = splitDot(inputCargo.value);
+  addAlertColor(
+    inputCargo.value.match(inputCargo.pattern) &&
+      split[0].length <= 8 &&
+      split[1].length <= 3,
+    spanCargo,
+    "Введите в формате XXXXXXXX.XXX"
+  );
+});
+
+/* XXX.XX.XX (W/E) LAT ( 0 180 / 0 60 / 0 59) */
+const inputLat = document.querySelector(".lat-input");
+const spanLat = document.querySelector(".lat-span");
+inputLat?.addEventListener("input", function () {
+  validate(inputLat, spanLat, "Введите, пожалуйста, в формате 000.00.00");
+});
+
+/* XX.XX.XX (N/S) LONG ( 0 90 / 0 59 / 0 59) */
+const inputLong = document.querySelector(".long-input");
+const spanLong = document.querySelector(".long-span");
+inputLong?.addEventListener("input", function () {
+  validate(
+    inputLong,
+    spanLong,
+    "Введите, пожалуйста, в формате 00.00.00",
+    90,
+    59,
+    8
+  );
+});
+
+function validate(
+  inputArg,
+  spanArg,
+  text,
+  degreesArg = 180,
+  minutesArg = 60,
+  lengthTwoArg = 9
+) {
+  const split = splitDot(inputArg.value);
+  const degrees = +split[0] >= 0 && +split[0] <= degreesArg;
+  const minutes = +split[1] >= 0 && +split[1] <= minutesArg;
+  const seconds = +split[2] >= 0 && +split[2] <= 59;
+  addAlertColor(
+    inputArg.value.match(inputArg.pattern) &&
+      inputArg.value.length <= lengthTwoArg &&
+      degrees &&
+      minutes &&
+      seconds,
+    spanArg,
+    text
+  );
+}
+
+function addAlertColor(condition, spanArg, text) {
+  if (condition) {
+    console.log("ok");
+    spanArg.classList.remove("error");
+  } else {
+    console.log("not ok");
+    spanArg.classList.add("error");
+  }
+}
+
+function splitDot(value) {
+  return value.split(".");
+}
 
 getElements(currentPage);
 setListeners();

@@ -2,10 +2,40 @@
 h6 {
   margin: 0;
 }
-.form-floating > .form-control::placeholder {
-  color: revert;
+label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+input:invalid {
+  border: 1px solid rgba(255, 0, 0, 0.5);
+  box-shadow: 0 0 0 0.25rem rgba(255, 0, 0, 0.25);
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-.form-floating > .form-control:not(:focus)::placeholder {
-  color: transparent;
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
+.error {
+  color: red;
+}
+.small {
+  font-size: 11px;
+  transition: all 0.3s;
+  opacity: 0;
+}
+.small.error {
+  opacity: 1;
+}
+// .form-floating > .form-control::placeholder {
+//   color: revert;
+// }
+
+// .form-floating > .form-control:not(:focus)::placeholder {
+//   color: transparent;
+// }
