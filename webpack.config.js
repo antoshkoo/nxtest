@@ -1,3 +1,5 @@
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const HtmlInlineScriptPlugin = require("html-inline-script-webpack-plugin");
 const path = require("path");
 
 module.exports = {
@@ -10,7 +12,12 @@ module.exports = {
     static: path.resolve(__dirname, "dist"),
     port: 8080,
     hot: true,
+    watchFiles: ["src/**/*"],
   },
+  plugins: [
+    new HtmlWebpackPlugin({ template: "src/index.html", inject: "body" }),
+    new HtmlInlineScriptPlugin(),
+  ],
   module: {
     rules: [
       {
