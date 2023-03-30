@@ -4,18 +4,37 @@ import { Tab, Card } from "bootstrap";
 import { saveAs } from "file-saver";
 
 let currentPage = "Sailing";
-let copyTextarea, saveBtn, copyBtn, saveAndMailBtn, loadBtn, loadInput, form;
-
+let copyTextarea,
+  saveBtn,
+  copyBtn,
+  saveAndMailBtn,
+  loadBtn,
+  loadInput,
+  form,
+  reportType,
+  vesselName,
+  vesselImo,
+  vesselMmsi,
+  vesselLocalTime,
+  voyageNumber;
 const _email = "bali@ogo-ogo.com";
 
 const getElements = (page) => {
-  copyTextarea = document.getElementById(`copyTextarea${page}`);
-  saveBtn = document.getElementById(`saveBtn${page}`);
-  copyBtn = document.getElementById(`copyBtn${page}`);
-  saveAndMailBtn = document.getElementById(`mailBtn${page}`);
-  loadBtn = document.getElementById(`loadBtn${page}`);
-  loadInput = document.getElementById(`loadInput${currentPage}`);
+  copyTextarea = document.querySelector(`#form${currentPage} #copyTextarea`);
+  saveBtn = document.querySelector(`#form${currentPage} #saveBtn`);
+  copyBtn = document.querySelector(`#form${currentPage} #copyBtn`);
+  saveAndMailBtn = document.querySelector(`#form${currentPage} #mailBtn`);
+  loadBtn = document.querySelector(`#form${currentPage} #loadBtn`);
+  loadInput = document.querySelector(`#form${currentPage} #loadInput`);
   form = document.getElementById(`form${page}`);
+  reportType = document.querySelector(`#form${currentPage} #reportType`);
+  vesselName = document.querySelector(`#form${currentPage} #vesselName`);
+  vesselImo = document.querySelector(`#form${currentPage} #vesselImo`);
+  vesselMmsi = document.querySelector(`#form${currentPage} #vesselMmsi`);
+  vesselLocalTime = document.querySelector(
+    `#form${currentPage} #vesselLocalTime`
+  );
+  voyageNumber = document.querySelector(`#form${currentPage} #voyageNumber`);
 };
 
 const setListeners = () => {
@@ -30,15 +49,11 @@ const setListeners = () => {
 
   saveBtn.addEventListener("click", () => {
     if (!form.checkValidity()) return;
-    setVesselToLocalStorage();
-    setReportToLocalStorage();
     saveReport();
   });
 
   saveAndMailBtn.addEventListener("click", () => {
     if (!form.checkValidity()) return;
-    setVesselToLocalStorage();
-    setReportToLocalStorage();
     saveReport();
     sendMail();
   });
@@ -52,43 +67,18 @@ const setListeners = () => {
   });
 
   document.addEventListener("DOMContentLoaded", () => {
-    const data = getVesselFromLocalStorage();
-    document.getElementById("reportType").value = currentPage;
-    document.getElementById("vesselName").value = data.vesselName || "";
-    document.getElementById("vesselImo").value = data.vesselImo || "";
-    document.getElementById("vesselMmsi").value = data.vesselMmsi || "";
-    document.getElementById("vesselLocalTime").value =
-      data.vesselLocalTime || "";
-    copyTextarea.innerText = getFormData();
-    const lastReports = JSON.parse(localStorage.getItem("reports")) || {};
-    if (lastReports[currentPage]) {
-      setLoadedDataToForm(lastReports[currentPage]);
-    }
+    setLastVesselAndLastReportData();
   });
 };
 
-const getVesselData = () => {
-  const vesselName =
-    document.querySelector(`#form${currentPage} #vesselName`).value || "";
-  const vesselIMO =
-    document.querySelector(`#form${currentPage} #vesselImo`).value || "";
-  const vesselMmsi =
-    document.querySelector(`#form${currentPage} #vesselMmsi`).value || "";
-  const vesselLocalTime =
-    document.querySelector(`#form${currentPage} #vesselLocalTime`).value || "";
-  const voyageNumber =
-    document.querySelector(`#form${currentPage} #voyageNumber`).value || "";
-  return {
-    vesselName: vesselName,
-    vesselImo: vesselIMO,
-    vesselMmsi: vesselMmsi,
-    vesselLocalTime: vesselLocalTime,
-    voyageNumber: voyageNumber,
-  };
-};
-
 const setVesselToLocalStorage = () => {
-  const vesselData = getVesselData();
+  const vesselData = {
+    vesselName: vesselName.value || "",
+    vesselImo: vesselImo.value || "",
+    vesselMmsi: vesselMmsi.value || "",
+    vesselLocalTime: vesselLocalTime.value || "",
+    voyageNumber: voyageNumber.value || "",
+  };
   localStorage.setItem("vessel", JSON.stringify(vesselData));
 };
 
@@ -113,6 +103,8 @@ const getFormData = () => {
 };
 
 const saveReport = () => {
+  setVesselToLocalStorage();
+  setReportToLocalStorage();
   const data = getFormData();
   const fileName = getReportName();
   const file = new File([data], fileName, {
@@ -179,26 +171,24 @@ pages.forEach((page) => {
     currentPage = page.id;
     getElements(currentPage);
     setListeners();
-    const data = getVesselFromLocalStorage();
-    document.querySelector(`#form${currentPage} #reportType`).value =
-      currentPage;
-    document.querySelector(`#form${currentPage} #vesselName`).value =
-      data.vesselName || "";
-    document.querySelector(`#form${currentPage} #vesselImo`).value =
-      data.vesselImo || "";
-    document.querySelector(`#form${currentPage} #vesselMmsi`).value =
-      data.vesselMmsi || "";
-    document.querySelector(`#form${currentPage} #vesselLocalTime`).value =
-      data.vesselLocalTime || "";
-    document.querySelector(`#form${currentPage} #voyageNumber`).value =
-      data.voyageNumber || "";
-    copyTextarea.innerText = getFormData();
-    const lastReports = JSON.parse(localStorage.getItem("reports")) || {};
-    if (lastReports[currentPage]) {
-      setLoadedDataToForm(lastReports[currentPage]);
-    }
+    setLastVesselAndLastReportData();
   });
 });
+
+const setLastVesselAndLastReportData = () => {
+  const lastReports = JSON.parse(localStorage.getItem("reports")) || {};
+  if (lastReports[currentPage]) {
+    setLoadedDataToForm(lastReports[currentPage]);
+  }
+  const data = getVesselFromLocalStorage();
+  reportType.value = currentPage;
+  vesselName.value = data.vesselName || "";
+  vesselImo.value = data.vesselImo || "";
+  vesselMmsi.value = data.vesselMmsi || "";
+  vesselLocalTime.value = data.vesselLocalTime || "";
+  voyageNumber.value = data.voyageNumber || "";
+  copyTextarea.innerText = getFormData();
+};
 
 /* везде в масках применяем точку */
 /*  IMO 7 цифр */
