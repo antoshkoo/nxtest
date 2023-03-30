@@ -3,7 +3,7 @@ import "../scss/styles.scss";
 import { Tab, Card } from "bootstrap";
 import { saveAs } from "file-saver";
 
-let currentPage = "Sailing";
+let currentPage = "Load";
 let copyTextarea,
   saveBtn,
   copyBtn,

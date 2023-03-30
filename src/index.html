@@ -75,7 +75,7 @@
           <ul class="nav nav-pills" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
               <button
-                class="nav-link active"
+                class="nav-link"
                 id="Stop"
                 data-bs-toggle="pill"
                 data-bs-target="#pills-stop"
@@ -118,21 +118,6 @@
             <li class="nav-item" role="presentation">
               <button
                 class="nav-link"
-                id="Cargo"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-cargo"
-                type="button"
-                role="tab"
-                aria-controls="pills-cargo"
-                aria-selected="false"
-                disabled
-              >
-                Cargo
-              </button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button
-                class="nav-link"
                 id="Arrival"
                 data-bs-toggle="pill"
                 data-bs-target="#pills-arrival"
@@ -144,13 +129,42 @@
                 Arrival
               </button>
             </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link active"
+                id="Load"
+                data-bs-toggle="pill"
+                data-bs-target="#pills-load"
+                type="button"
+                role="tab"
+                aria-controls="pills-load"
+                aria-selected="false"
+              >
+                Load
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="Discharge"
+                data-bs-toggle="pill"
+                data-bs-target="#pills-discharge"
+                type="button"
+                role="tab"
+                aria-controls="pills-discharge"
+                aria-selected="false"
+              >
+                Discharge
+              </button>
+            </li>
           </ul>
         </div>
       </div>
       <div class="row mt-3 mb-3">
         <div class="tab-content" id="pills-tabContent">
+          <!-- Stop -->
           <div
-            class="tab-pane fade show active"
+            class="tab-pane fade"
             id="pills-stop"
             role="tabpanel"
             aria-labelledby="pills-stop-tab"
@@ -523,6 +537,7 @@
               />
             </form>
           </div>
+          <!-- //Stop -->
           <!-- Departure -->
           <div
             class="tab-pane fade"
@@ -1598,6 +1613,493 @@
             </form>
           </div>
           <!-- //Arrival-->
+          <!-- Load -->
+          <div
+            class="tab-pane fade show active"
+            id="pills-load"
+            role="tabpanel"
+            aria-labelledby="pills-load-tab"
+            tabindex="4"
+          >
+            <form id="formLoad">
+              <div class="row">
+                <div class="col-6 d-flex flex-column gap-3">
+                  <div class="row">
+                    <div class="col">
+                      <label for="vesselName" class="form-label"
+                        >Vessel name</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="vesselName"
+                        name="vesselName"
+                        placeholder="Bali"
+                        required
+                      />
+                    </div>
+                    <div class="col">
+                      <label for="vesselImo" class="form-label"
+                        >Vessel IMO*
+                        <span class="imo-span small"
+                          >Must contain 7 digits</span
+                        >
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="vesselImo"
+                        name="vesselImo"
+                        placeholder="0000000"
+                        pattern="[0-9]{7}"
+                        maxlength="7"
+                        minlength="7"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <label for="vesselMmsi" class="form-label"
+                        >Vessel MMSI</label
+                      >
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="vesselMmsi"
+                        name="vesselMmsi"
+                        placeholder="000000000"
+                      />
+                    </div>
+                    <div class="col">
+                      <label for="vesselLocalTime" class="form-label"
+                        >Observe date, local time</label
+                      >
+                      <input
+                        type="datetime-local"
+                        class="form-control"
+                        id="vesselLocalTime"
+                        name="vesselLocalTime"
+                        placeholder="00/00/0000 00:00"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <div class="card bg-light">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col">
+                              <label for="etd" class="form-label"
+                                >Departure, ETD</label
+                              >
+                              <input
+                                type="datetime-local"
+                                class="form-control"
+                                id="etd"
+                                name="etd"
+                                placeholder="00/00/0000 00:00"
+                                required
+                              />
+                            </div>
+                            <div class="col"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <div class="card bg-light">
+                        <div class="card-body d-flex flex-column gap-3">
+                          <div class="row">
+                            <div class="col">
+                              <label class="form-label">Cargo</label>
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="cargo1"
+                                name="cargo1"
+                                placeholder="Name #1"
+                              />
+                            </div>
+                            <div class="col">
+                              <label class="form-label">Nominated</label>
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="quantity1"
+                                name="quantity1"
+                                placeholder="Quantity"
+                              />
+                            </div>
+                            <div class="col">
+                              <label class="form-label">Loaded</label>
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="quantityNominated1"
+                                name="quantityNominated1"
+                                placeholder="Quantity"
+                              />
+                            </div>
+                            <div class="col">
+                              <label class="form-label">Finished</label>
+                              <input
+                                type="datetime-local"
+                                class="form-control"
+                                id="cargoFinished1"
+                                name="cargoFinished1"
+                                placeholder="00/00/0000 00:00"
+                              />
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="cargo2"
+                                name="cargo2"
+                                placeholder="Name #2"
+                              />
+                            </div>
+                            <div class="col">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="quantity2"
+                                name="quantity2"
+                                placeholder="0.00"
+                              />
+                            </div>
+                            <div class="col">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="quantityNominated2"
+                                name="quantityNominated2"
+                                placeholder="0.00"
+                              />
+                            </div>
+                            <div class="col">
+                              <input
+                                type="datetime-local"
+                                class="form-control"
+                                id="cargoFinished2"
+                                name="cargoFinished2"
+                                placeholder="00/00/0000 00:00"
+                              />
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="cargo3"
+                                name="cargo3"
+                                placeholder="Name #3"
+                              />
+                            </div>
+                            <div class="col">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="quantity3"
+                                name="quantity3"
+                                placeholder="0.00"
+                              />
+                            </div>
+                            <div class="col">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="quantityNominated3"
+                                name="quantityNominated3"
+                                placeholder="0.00"
+                              />
+                            </div>
+                            <div class="col">
+                              <input
+                                type="datetime-local"
+                                class="form-control"
+                                id="cargoFinished3"
+                                name="cargoFinished3"
+                                placeholder="00/00/0000 00:00"
+                              />
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="cargo4"
+                                name="cargo4"
+                                placeholder="Name #4"
+                              />
+                            </div>
+                            <div class="col">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="quantity4"
+                                name="quantity4"
+                                placeholder="0.00"
+                              />
+                            </div>
+                            <div class="col">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="quantityNominated4"
+                                name="quantityNominated4"
+                                placeholder="0.00"
+                              />
+                            </div>
+                            <div class="col">
+                              <input
+                                type="datetime-local"
+                                class="form-control"
+                                id="cargoFinished4"
+                                name="cargoFinished4"
+                                placeholder="00/00/0000 00:00"
+                              />
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="cargo5"
+                                name="cargo5"
+                                placeholder="Name #5"
+                              />
+                            </div>
+                            <div class="col">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="quantity5"
+                                name="quantity5"
+                                placeholder="0.00"
+                              />
+                            </div>
+                            <div class="col">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="quantityNominated5"
+                                name="quantityNominated5"
+                                placeholder="0.00"
+                              />
+                            </div>
+                            <div class="col">
+                              <input
+                                type="datetime-local"
+                                class="form-control"
+                                id="cargoFinished5"
+                                name="cargoFinished5"
+                                placeholder="00/00/0000 00:00"
+                              />
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="cargo6"
+                                name="cargo6"
+                                placeholder="Name #6"
+                              />
+                            </div>
+                            <div class="col">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="quantity6"
+                                name="quantity6"
+                                placeholder="0.00"
+                              />
+                            </div>
+                            <div class="col">
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="quantityNominated6"
+                                name="quantityNominated6"
+                                placeholder="0.00"
+                              />
+                            </div>
+                            <div class="col">
+                              <input
+                                type="datetime-local"
+                                class="form-control"
+                                id="cargoFinished6"
+                                name="cargoFinished6"
+                                placeholder="00/00/0000 00:00"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row form-floating m-auto w-100">
+                    <textarea
+                      class="form-control"
+                      name="comment"
+                      id="comment"
+                      style="height: 100px"
+                    ></textarea>
+                    <label for="comment">Comment</label>
+                  </div>
+                </div>
+                <div class="col-3 d-flex flex-column gap-3">
+                  <div class="card bg-light">
+                    <div class="card-body">
+                      <label for="ifo380" class="form-label"
+                        >Voyage number</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="voyageNumber"
+                        name="voyageNumber"
+                        placeholder="000000"
+                      />
+                    </div>
+                  </div>
+                  <div class="card bg-light">
+                    <div class="card-body d-flex flex-column gap-3">
+                      <h6>ROB at observe date</h6>
+                      <div>
+                        <label for="ifo380" class="form-label">IFO 380</label>
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="ifo380"
+                          name="ifo380"
+                          placeholder="0.000"
+                        />
+                      </div>
+                      <div>
+                        <label for="ifo180" class="form-label">IFO 180</label>
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="ifo180"
+                          name="ifo180"
+                          placeholder="0.000"
+                        />
+                      </div>
+                      <div>
+                        <label for="vlsfo" class="form-label">VLSFO</label>
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="vlsfo"
+                          name="vlsfo"
+                          placeholder="0.000"
+                        />
+                      </div>
+                      <div>
+                        <label for="ulsfo" class="form-label">ULSFO</label>
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="ulsfo"
+                          name="ulsfo"
+                          placeholder="0.000"
+                        />
+                      </div>
+                      <div>
+                        <label for="mgo" class="form-label">MGO</label>
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="mgo"
+                          name="mgo"
+                          placeholder="0.000"
+                        />
+                      </div>
+                      <div>
+                        <label for="mdo" class="form-label">MDO</label>
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="mdo"
+                          name="mdo"
+                          placeholder="0.000"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3 d-flex flex-column gap-3">
+                  <h6 class="card-title">
+                    Copy this text and send to operational mailbox
+                  </h6>
+                  <textarea
+                    class="form-control"
+                    name="copyTextarea"
+                    id="copyTextarea"
+                    style="height: 406px"
+                  ></textarea>
+                  <div class="d-flex flex-column gap-3">
+                    <div class="row">
+                      <div class="col-4">
+                        <button
+                          type="button"
+                          class="btn btn-success w-100"
+                          id="copyBtn"
+                        >
+                          Copy
+                        </button>
+                      </div>
+                      <div class="col-4">
+                        <button
+                          type="button"
+                          class="btn btn-primary w-100"
+                          id="saveBtn"
+                        >
+                          Save
+                        </button>
+                      </div>
+                      <div class="col-4">
+                        <button
+                          type="button"
+                          class="btn btn-outline-dark w-100"
+                          id="loadBtn"
+                        >
+                          Load
+                        </button>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      id="mailBtn"
+                    >
+                      Save and mail
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <input type="hidden" name="reportType" id="reportType" />
+              <input
+                type="file"
+                name="loadInput"
+                id="loadInput"
+                class="d-none"
+              />
+            </form>
+          </div>
+          <!-- //Load -->
         </div>
       </div>
     </div>

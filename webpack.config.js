@@ -15,8 +15,8 @@ module.exports = {
     watchFiles: ["src/**/*"],
   },
   plugins: [
-    new HtmlWebpackPlugin({ template: "./src/index.html", inject: "body" }),
-    new HtmlInlineScriptPlugin(),
+    new HtmlWebpackPlugin({ template: "./src/index.html" }),
+    // new HtmlInlineScriptPlugin(),
   ],
   module: {
     rules: [
