@@ -2,6 +2,11 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const HtmlInlineScriptPlugin = require("html-inline-script-webpack-plugin");
 const path = require("path");
 
+// plugins: [
+//   new HtmlWebpackPlugin({ template: "./src/index.html" }),
+//   // new HtmlInlineScriptPlugin(),
+// ],
+
 module.exports = {
   entry: "./src/js/main.js",
   output: {
@@ -15,8 +20,8 @@ module.exports = {
     watchFiles: ["src/**/*"],
   },
   plugins: [
-    new HtmlWebpackPlugin({ template: "./src/index.html" }),
-    // new HtmlInlineScriptPlugin(),
+    new HtmlWebpackPlugin({ template: "./src/index.html", inject: "body" }),
+    new HtmlInlineScriptPlugin(),
   ],
   module: {
     rules: [

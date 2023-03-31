@@ -3,7 +3,7 @@ import "../scss/styles.scss";
 import { Tab, Card } from "bootstrap";
 import { saveAs } from "file-saver";
 
-let currentPage = "Load";
+let currentPage = "Sailing";
 let copyTextarea,
   saveBtn,
   copyBtn,
@@ -43,7 +43,12 @@ const setListeners = () => {
     navigator.clipboard.writeText(copyTextarea.value);
   });
 
-  form.addEventListener("input", () => {
+  form.addEventListener("input", (e) => {
+    // console.log(e.nextSibling.innerHTML);
+    // const target = e.target.id;
+    // if (target.indexOf("dischargeCargo")) {
+    //   // document.getElementById('dischargeFinished1')
+    // }
     copyTextarea.innerText = getFormData();
   });
 
@@ -176,17 +181,19 @@ pages.forEach((page) => {
 });
 
 const setLastVesselAndLastReportData = () => {
+  reportType.value = currentPage;
   const lastReports = JSON.parse(localStorage.getItem("reports")) || {};
   if (lastReports[currentPage]) {
     setLoadedDataToForm(lastReports[currentPage]);
   }
   const data = getVesselFromLocalStorage();
-  reportType.value = currentPage;
-  vesselName.value = data.vesselName || "";
-  vesselImo.value = data.vesselImo || "";
-  vesselMmsi.value = data.vesselMmsi || "";
-  vesselLocalTime.value = data.vesselLocalTime || "";
-  voyageNumber.value = data.voyageNumber || "";
+  if (data) {
+    vesselName.value = data.vesselName || "";
+    vesselImo.value = data.vesselImo || "";
+    vesselMmsi.value = data.vesselMmsi || "";
+    vesselLocalTime.value = data.vesselLocalTime || "";
+    voyageNumber.value = data.voyageNumber || "";
+  }
   copyTextarea.innerText = getFormData();
 };
 
