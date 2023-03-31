@@ -2,10 +2,20 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const HtmlInlineScriptPlugin = require("html-inline-script-webpack-plugin");
 const path = require("path");
 
-// plugins: [
-//   new HtmlWebpackPlugin({ template: "./src/index.html" }),
-//   // new HtmlInlineScriptPlugin(),
-// ],
+const isProduction =
+  process.argv[process.argv.indexOf("--mode") + 1] === "production";
+
+let plugins = [new HtmlWebpackPlugin({ template: "./src/index.html" })];
+
+if (isProduction) {
+  plugins = [
+    new HtmlWebpackPlugin({
+      template: "./src/index.html",
+      inject: "body",
+    }),
+    new HtmlInlineScriptPlugin(),
+  ];
+}
 
 module.exports = {
   entry: "./src/js/main.js",
@@ -19,10 +29,7 @@ module.exports = {
     hot: true,
     watchFiles: ["src/**/*"],
   },
-  plugins: [
-    new HtmlWebpackPlugin({ template: "./src/index.html", inject: "body" }),
-    new HtmlInlineScriptPlugin(),
-  ],
+  plugins: plugins,
   module: {
     rules: [
       {
