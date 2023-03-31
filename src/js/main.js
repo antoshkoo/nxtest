@@ -266,25 +266,25 @@ inputCargo?.addEventListener("input", function () {
   );
 });
 
-/* XXX.XX.XX (W/E) LAT ( 0 180 / 0 60 / 0 59) */
+/* XX.XX.XX (W/E) LAT ( 0 90 / 0 59 / 0 59) */
 const inputLat = document.querySelector(".lat-input");
 const spanLat = document.querySelector(".lat-span");
 inputLat?.addEventListener("input", function () {
-  validate(inputLat, spanLat, "Введите, пожалуйста, в формате 000.00.00");
-});
-
-/* XX.XX.XX (N/S) LONG ( 0 90 / 0 59 / 0 59) */
-const inputLong = document.querySelector(".long-input");
-const spanLong = document.querySelector(".long-span");
-inputLong?.addEventListener("input", function () {
   validate(
-    inputLong,
-    spanLong,
+    inputLat,
+    spanLat,
     "Введите, пожалуйста, в формате 00.00.00",
     90,
     59,
     8
   );
+});
+
+/* XXX.XX.XX (N/S) LONG ( 0 180 / 0 60 / 0 59) */
+const inputLong = document.querySelector(".long-input");
+const spanLong = document.querySelector(".long-span");
+inputLong?.addEventListener("input", function () {
+  validate(inputLong, spanLong, "Введите, пожалуйста, в формате 000.00.00");
 });
 
 function validate(
@@ -306,16 +306,17 @@ function validate(
       minutes &&
       seconds,
     spanArg,
-    text
+    text,
+    inputArg
   );
 }
 
-function addAlertColor(condition, spanArg, text) {
+function addAlertColor(condition, spanArg, text, input) {
   if (condition) {
     console.log("ok");
     spanArg.classList.remove("error");
   } else {
-    console.log("not ok");
+    console.log(input);
     spanArg.classList.add("error");
   }
 }
