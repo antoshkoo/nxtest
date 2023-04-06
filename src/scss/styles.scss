@@ -29,9 +29,17 @@ input[type="number"] {
   font-size: 11px;
   transition: all 0.3s;
   opacity: 0;
+  white-space: nowrap;
 }
 .small.error {
   opacity: 1;
+}
+.display-flex {
+  display: flex;
+  flex-direction: row;
+}
+.gap-10px {
+  gap: 10px;
 }
 // .form-floating > .form-control::placeholder {
 //   color: revert;

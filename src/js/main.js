@@ -16,7 +16,11 @@ let copyTextarea,
   vesselImo,
   vesselMmsi,
   vesselLocalTime,
-  voyageNumber;
+  voyageNumber,
+  inputLat,
+  spanLat,
+  inputLong,
+  spanLong;
 const _email = "bali@ogo-ogo.com";
 
 const getElements = (page) => {
@@ -35,6 +39,10 @@ const getElements = (page) => {
     `#form${currentPage} #vesselLocalTime`
   );
   voyageNumber = document.querySelector(`#form${currentPage} #voyageNumber`);
+  inputLat = document.querySelector(`#form${currentPage} .lat-input`);
+  spanLat = document.querySelector(`#form${currentPage} .lat-span`);
+  inputLong = document.querySelector(`#form${currentPage} .long-input`);
+  spanLong = document.querySelector(`#form${currentPage} .long-span`);
 };
 
 const setListeners = () => {
@@ -44,11 +52,6 @@ const setListeners = () => {
   });
 
   form.addEventListener("input", (e) => {
-    // console.log(e.nextSibling.innerHTML);
-    // const target = e.target.id;
-    // if (target.indexOf("dischargeCargo")) {
-    //   // document.getElementById('dischargeFinished1')
-    // }
     copyTextarea.innerText = getFormData();
   });
 
@@ -73,6 +76,25 @@ const setListeners = () => {
 
   document.addEventListener("DOMContentLoaded", () => {
     setLastVesselAndLastReportData();
+  });
+
+  inputLat?.addEventListener("input", function () {
+    validateLatLong(
+      inputLat,
+      spanLat,
+      "Введите, пожалуйста, в формате 00.00.00",
+      90,
+      59,
+      8
+    );
+  });
+
+  inputLong?.addEventListener("input", function () {
+    validateLatLong(
+      inputLong,
+      spanLong,
+      "Введите, пожалуйста, в формате 000.00.00"
+    );
   });
 };
 
@@ -239,8 +261,8 @@ inputMedium?.addEventListener("input", function () {
 });
 
 /*  Для топлива - XXXX.XXX */
-const inputFuel = document.querySelector(".fuel-input");
-const spanFuel = document.querySelector(".fuel-span");
+const inputFuel = document.querySelector(`#form${currentPage} .fuel-input`);
+const spanFuel = document.querySelector(`#form${currentPage} .fuel-span`);
 inputFuel?.addEventListener("input", function () {
   const split = splitDot(inputFuel.value);
   addAlertColor(
@@ -266,35 +288,14 @@ inputCargo?.addEventListener("input", function () {
   );
 });
 
-/* XX.XX.XX (W/E) LAT ( 0 90 / 0 59 / 0 59) */
-const inputLat = document.querySelector(".lat-input");
-const spanLat = document.querySelector(".lat-span");
-inputLat?.addEventListener("input", function () {
-  validate(
-    inputLat,
-    spanLat,
-    "Введите, пожалуйста, в формате 00.00.00",
-    90,
-    59,
-    8
-  );
-});
-
-/* XXX.XX.XX (N/S) LONG ( 0 180 / 0 60 / 0 59) */
-const inputLong = document.querySelector(".long-input");
-const spanLong = document.querySelector(".long-span");
-inputLong?.addEventListener("input", function () {
-  validate(inputLong, spanLong, "Введите, пожалуйста, в формате 000.00.00");
-});
-
-function validate(
+const validateLatLong = (
   inputArg,
   spanArg,
   text,
   degreesArg = 180,
   minutesArg = 60,
   lengthTwoArg = 9
-) {
+) => {
   const split = splitDot(inputArg.value);
   const degrees = +split[0] >= 0 && +split[0] <= degreesArg;
   const minutes = +split[1] >= 0 && +split[1] <= minutesArg;
@@ -309,21 +310,21 @@ function validate(
     text,
     inputArg
   );
-}
+};
 
-function addAlertColor(condition, spanArg, text, input) {
+const addAlertColor = (condition, spanArg, text, input) => {
   if (condition) {
-    console.log("ok");
+    console.log(spanArg);
+
     spanArg.classList.remove("error");
   } else {
-    console.log(input);
     spanArg.classList.add("error");
   }
-}
+};
 
-function splitDot(value) {
+const splitDot = (value) => {
   return value.split(".");
-}
+};
 
 getElements(currentPage);
 setListeners();
