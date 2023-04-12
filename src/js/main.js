@@ -3,7 +3,7 @@ import "../scss/styles.scss";
 import { Tab, Card } from "bootstrap";
 import { saveAs } from "file-saver";
 
-const _email = "bali@ogo-ogo.com";
+const _email = "vrs@pola-rise.ru";
 
 let currentPage = "Sailing";
 let copyTextarea,
