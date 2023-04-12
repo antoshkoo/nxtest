@@ -3,6 +3,8 @@ import "../scss/styles.scss";
 import { Tab, Card } from "bootstrap";
 import { saveAs } from "file-saver";
 
+const _email = "bali@ogo-ogo.com";
+
 let currentPage = "Sailing";
 let copyTextarea,
   saveBtn,
@@ -21,7 +23,6 @@ let copyTextarea,
   spanLat,
   inputLong,
   spanLong;
-const _email = "bali@ogo-ogo.com";
 
 const getElements = (page) => {
   copyTextarea = document.querySelector(`#form${currentPage} #copyTextarea`);
@@ -52,7 +53,10 @@ const setListeners = () => {
   });
 
   form.addEventListener("input", (e) => {
-    copyTextarea.innerText = getFormData();
+    copyTextarea.innerText = "";
+    copyTextarea.insertAdjacentHTML("afterBegin", getFormData());
+    copyTextarea.insertAdjacentHTML("afterBegin", "------\n");
+    copyTextarea.insertAdjacentHTML("afterBegin", getHumanReadableData());
   });
 
   saveBtn.addEventListener("click", () => {
@@ -129,6 +133,241 @@ const getFormData = () => {
   return JSON.stringify(data);
 };
 
+const getHumanReadableData = () => {
+  const data = JSON.parse(getFormData());
+  const vesselInfo = `Name: ${data.vesselName || "n/a"}, IMO: ${
+    data.vesselImo || "n/a"
+  }, MMSI: ${data.vesselMmsi || "n/a"}
+OBS.DT: ${data.vesselLocalTime ? formatDate(data.vesselLocalTime) : "n/a"}`;
+  const latLong = `Lat: ${data.latSn === "N" ? "" : "-"}${
+    data.latitude || "n/a"
+  }
+Long: ${data.longEw === "E" ? "" : "-"}${data.longtitude || "n/a"}`;
+  const robs = `IFO380:  ${data.ifo380 ? data.ifo380 + " MT" : "n/a"}
+IFO180: ${data.ifo180 ? data.ifo180 + " MT" : "n/a"}
+VLSFO: ${data.vlsfo ? data.vlsfo + " MT" : "n/a"}
+ULSFO: ${data.ulsfo ? data.ulsfo + " MT" : "n/a"}
+MGO: ${data.mgo ? data.mgo + " MT" : "n/a"}
+MDO: ${data.mdo ? data.mdo + " MT" : "n/a"}`;
+
+  switch (currentPage) {
+    case "Sailing":
+      return `${currentPage} report:
+Voyage number: ${data.voyageNumber}
+${vesselInfo}
+${latLong}
+Next waypoint: ${data.nextRiverCanal || "n/a"}, ETA: ${
+        data.etaNextRiverCanal ? formatDate(data.etaNextRiverCanal) : "n/a"
+      }
+Next port: ${data.nextPort || "n/a"}, ETA: ${
+        data.eta ? formatDate(data.eta) : "n/a"
+      }
+AVRPM: ${data.rpmLastReport || "n/a"}
+Distance: ${data.distance || "n/a"}
+${robs}
+Comment: ${data.comment || "n/a"}
+`;
+    case "Departure":
+      return `${currentPage} report:
+Voyage number: ${data.voyageNumber}
+${vesselInfo}
+${latLong}
+Departure DT: ${data.factLocalTime ? formatDate(data.factLocalTime) : "n/a"}
+Next waypoint: ${data.nextRiverCanal || "n/a"}, ETA: ${
+        data.etaNextRiverCanal ? formatDate(data.etaNextRiverCanal) : "n/a"
+      }
+Destination port: ${data.nextPort || "n/a"}, ETA: ${
+        data.eta ? formatDate(data.eta) : "n/a"
+      }
+${robs}
+Comment: ${data.comment || "n/a"}
+      `;
+    case "Stop":
+      return `${currentPage} report:
+Voyage number: ${data.voyageNumber}
+${vesselInfo}
+${latLong}
+Stop DT: ${data.stopFactDate ? formatDate(data.stopFactDate) : "n/a"}
+Stop ETD: ${data.etd ? formatDate(data.etd) : "n/a"}
+Departure DT: ${data.factTime ? formatDate(data.factTime) : "n/a"}
+Next waypoint: ${data.nextRiverCanal || "n/a"}, ETA: ${
+        data.etaNextRiverCanal ? formatDate(data.etaNextRiverCanal) : "n/a"
+      }
+Destination port: ${data.destinationPort || "n/a"}, ETA: ${
+        data.etaPortLocalTime ? formatDate(data.etaPortLocalTime) : "n/a"
+      }
+${robs}
+Comment: ${data.comment || "n/a"}
+`;
+    case "Arrival":
+      return `${currentPage} report:
+Voyage number: ${data.voyageNumber}
+${vesselInfo}
+${latLong}
+Arrival port: ${data.arrivalPort || "n/a"}
+NOR: ${data.nor ? formatDate(data.nor) : "n/a"}
+POB: ${data.pilotOnBoard ? formatDate(data.pilotOnBoard) : "n/a"}
+Arrival fact DT: ${data.factLocalTime ? formatDate(data.factLocalTime) : "n/a"}
+AVRPM: ${data.rpmLastReport || "n/a"}
+Distance: ${data.distance || "n/a"}
+${robs}
+Comment: ${data.comment || "n/a"}
+`;
+    case "Load":
+      return `${currentPage} report:
+Voyage number: ${data.voyageNumber}
+${vesselInfo}
+Departure ETD: ${data.etd ? formatDate(data.etd) : "n/a"}
+CRG#1: ${
+        data.loadCargo1
+          ? data.loadCargo1 +
+            ", Nominated: " +
+            (data.loadNominated1 || "n/a") +
+            ", Loaded: " +
+            (data.loadLoaded1 || "n/a") +
+            ", Finished: " +
+            (data.loadFinished1 ? formatDate(data.loadFinished1) : "n/a")
+          : "n/a"
+      }
+CRG#2: ${
+        data.loadCargo2
+          ? data.loadCargo2 +
+            ", Nominated: " +
+            (data.loadNominated2 || "n/a") +
+            ", Loaded: " +
+            (data.loadLoaded2 || "n/a") +
+            ", Finished: " +
+            (data.loadFinished2 ? formatDate(data.loadFinished2) : "n/a")
+          : "n/a"
+      }
+CRG#3: ${
+        data.loadCargo3
+          ? data.loadCargo3 +
+            ", Nominated: " +
+            (data.loadNominated3 || "n/a") +
+            ", Loaded: " +
+            (data.loadLoaded3 || "n/a") +
+            ", Finished: " +
+            (data.loadFinished3 ? formatDate(data.loadFinished3) : "n/a")
+          : "n/a"
+      }
+CRG#4: ${
+        data.loadCargo4
+          ? data.loadCargo4 +
+            ", Nominated: " +
+            (data.loadNominated4 || "n/a") +
+            ", Loaded: " +
+            (data.loadLoaded4 || "n/a") +
+            ", Finished: " +
+            (data.loadFinished4 ? formatDate(data.loadFinished4) : "n/a")
+          : "n/a"
+      }
+CRG#5: ${
+        data.loadCargo5
+          ? data.loadCargo5 +
+            ", Nominated: " +
+            (data.loadNominated5 || "n/a") +
+            ", Loaded: " +
+            (data.loadLoaded5 || "n/a") +
+            ", Finished: " +
+            (data.loadFinished5 ? formatDate(data.loadFinished5) : "n/a")
+          : "n/a"
+      }
+CRG#6: ${
+        data.loadCargo6
+          ? data.loadCargo6 +
+            ", Nominated: " +
+            (data.loadNominated6 || "n/a") +
+            ", Loaded: " +
+            (data.loadLoaded6 || "n/a") +
+            ", Finished: " +
+            (data.loadFinished6 ? formatDate(data.loadFinished6) : "n/a")
+          : "n/a"
+      }
+${robs}
+Comment: ${data.comment || "n/a"}
+`;
+    case "Discharge":
+      return `${currentPage} report:
+Voyage number: ${data.voyageNumber}
+${vesselInfo}
+Departure ETD: ${data.etd ? formatDate(data.etd) : "n/a"}
+CRG#1: ${
+        data.dischargeCargo1
+          ? data.dischargeCargo1 +
+            ", COB: " +
+            (data.dischargeQuantity1 || "n/a") +
+            ", Finished: " +
+            (data.dischargeFinished1
+              ? formatDate(data.dischargeFinished1)
+              : "n/a")
+          : "n/a"
+      }
+CRG#2: ${
+        data.dischargeCargo2
+          ? data.dischargeCargo2 +
+            ", COB: " +
+            (data.dischargeQuantity2 || "n/a") +
+            ", Finished: " +
+            (data.dischargeFinished2
+              ? formatDate(data.dischargeFinished2)
+              : "n/a")
+          : "n/a"
+      }
+CRG#3: ${
+        data.dischargeCargo3
+          ? data.dischargeCargo3 +
+            ", COB: " +
+            (data.dischargeQuantity3 || "n/a") +
+            ", Finished: " +
+            (data.dischargeFinished3
+              ? formatDate(data.dischargeFinished3)
+              : "n/a")
+          : "n/a"
+      }
+CRG#4: ${
+        data.dischargeCargo4
+          ? data.dischargeCargo4 +
+            ", COB: " +
+            (data.dischargeQuantity4 || "n/a") +
+            ", Finished: " +
+            (data.dischargeFinished4
+              ? formatDate(data.dischargeFinished4)
+              : "n/a")
+          : "n/a"
+      }
+CRG#5: ${
+        data.dischargeCargo5
+          ? data.dischargeCargo5 +
+            ", COB: " +
+            (data.dischargeQuantity5 || "n/a") +
+            ", Finished: " +
+            (data.dischargeFinished5
+              ? formatDate(data.dischargeFinished5)
+              : "n/a")
+          : "n/a"
+      }
+CRG#6: ${
+        data.dischargeCargo6
+          ? data.dischargeCargo6 +
+            ", COB: " +
+            (data.dischargeQuantity6 || "n/a") +
+            ", Finished: " +
+            (data.dischargeFinished6
+              ? formatDate(data.dischargeFinished6)
+              : "n/a")
+          : "n/a"
+      }
+${robs}
+Comment: ${data.comment || "n/a"}
+`;
+    default:
+      return `${vesselInfo}
+${robs}
+${data.comment || ""}`;
+  }
+};
+
 const saveReport = () => {
   setVesselToLocalStorage();
   setReportToLocalStorage();
@@ -154,9 +393,10 @@ const getReportName = () => {
 
 const sendMail = () => {
   const reportName = getReportName();
+  const body = copyTextarea.value.replace(/\n\r?/g, "%0D");
   setTimeout(
     () =>
-      (document.location.href = `mailto:${_email}?subject=${reportName}&body=${getFormData()}`),
+      (document.location.href = `mailto:${_email}?subject=${reportName}&body=${body}`),
     250
   );
 };
@@ -216,7 +456,17 @@ const setLastVesselAndLastReportData = () => {
     vesselLocalTime.value = data.vesselLocalTime || "";
     voyageNumber.value = data.voyageNumber || "";
   }
-  copyTextarea.innerText = getFormData();
+  copyTextarea.insertAdjacentHTML("afterBegin", getFormData());
+  copyTextarea.insertAdjacentHTML("afterBegin", "------\n");
+  copyTextarea.insertAdjacentHTML("afterBegin", getHumanReadableData());
+};
+
+const formatDate = (date) => {
+  date = new Date(date);
+  return new Intl.DateTimeFormat("en-GB", {
+    dateStyle: "short",
+    timeStyle: "short",
+  }).format(date);
 };
 
 /* везде в масках применяем точку */
@@ -314,8 +564,6 @@ const validateLatLong = (
 
 const addAlertColor = (condition, spanArg, text, input) => {
   if (condition) {
-    console.log(spanArg);
-
     spanArg.classList.remove("error");
   } else {
     spanArg.classList.add("error");
