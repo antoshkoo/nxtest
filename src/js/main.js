@@ -60,14 +60,14 @@ const setListeners = () => {
     robValidity();
   });
 
-  saveBtn.addEventListener("click", () => {
+  saveBtn.addEventListener("click", (e) => {
     if (!form.checkValidity()) return;
+    console.log("ss", e);
     saveReport();
   });
 
   mailBtn.addEventListener("click", () => {
     if (!form.checkValidity()) return;
-    // saveReport();
     sendMail();
   });
 
@@ -110,6 +110,7 @@ const setVesselToLocalStorage = () => {
     vesselImo: vesselImo.value || "",
     vesselMmsi: vesselMmsi.value || "",
     voyageNumber: voyageNumber.value || "",
+    vesselLocalTime: vesselLocalTime.value || "",
   };
   localStorage.setItem("vessel", JSON.stringify(vesselData));
 };
@@ -122,7 +123,6 @@ const getVesselFromLocalStorage = () => {
 const setReportToLocalStorage = () => {
   const currentData = JSON.parse(localStorage.getItem("reports")) || {};
   const data = JSON.parse(getFormData());
-  delete data.vesselLocalTime;
   currentData[currentPage.toString()] = data;
   localStorage.setItem("reports", JSON.stringify(currentData));
 };
@@ -437,7 +437,12 @@ const setLoadedDataToForm = (data) => {
 
 const pages = document.querySelectorAll(".nav-link");
 pages.forEach((page) => {
-  page.addEventListener("click", () => {
+  page.addEventListener("click", (e) => {
+    const content = document.getElementById("pills-tabContent");
+    content.innerHTML = content.innerHTML;
+    let currentArea = e.target.getAttribute("aria-controls");
+    let currentContent = document.getElementById(currentArea);
+    currentContent.classList.remove("fade");
     currentPage = page.id;
     getElements(currentPage);
     setListeners();
@@ -458,6 +463,7 @@ const setLastVesselAndLastReportData = () => {
     vesselImo.value = data.vesselImo || "";
     vesselMmsi.value = data.vesselMmsi || "";
     voyageNumber.value = data.voyageNumber || "";
+    vesselLocalTime.value = data.vesselLocalTime || "";
   }
   copyTextarea.insertAdjacentHTML("afterBegin", getFormData());
   copyTextarea.insertAdjacentHTML("afterBegin", "------\n");
