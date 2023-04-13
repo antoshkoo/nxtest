@@ -109,7 +109,6 @@ const setVesselToLocalStorage = () => {
     vesselName: vesselName.value || "",
     vesselImo: vesselImo.value || "",
     vesselMmsi: vesselMmsi.value || "",
-    vesselLocalTime: vesselLocalTime.value || "",
     voyageNumber: voyageNumber.value || "",
   };
   localStorage.setItem("vessel", JSON.stringify(vesselData));
@@ -123,6 +122,7 @@ const getVesselFromLocalStorage = () => {
 const setReportToLocalStorage = () => {
   const currentData = JSON.parse(localStorage.getItem("reports")) || {};
   const data = JSON.parse(getFormData());
+  delete data.vesselLocalTime;
   currentData[currentPage.toString()] = data;
   localStorage.setItem("reports", JSON.stringify(currentData));
 };
@@ -442,6 +442,7 @@ pages.forEach((page) => {
     getElements(currentPage);
     setListeners();
     setLastVesselAndLastReportData();
+    robValidity();
   });
 });
 
@@ -456,7 +457,6 @@ const setLastVesselAndLastReportData = () => {
     vesselName.value = data.vesselName || "";
     vesselImo.value = data.vesselImo || "";
     vesselMmsi.value = data.vesselMmsi || "";
-    vesselLocalTime.value = data.vesselLocalTime || "";
     voyageNumber.value = data.voyageNumber || "";
   }
   copyTextarea.insertAdjacentHTML("afterBegin", getFormData());
@@ -476,12 +476,15 @@ const robValidity = () => {
   const robsInputs = document.querySelectorAll(
     `#form${currentPage} #ifo180, #form${currentPage} #ifo380, #form${currentPage} #vlsfo, #form${currentPage} #ulsfo, #form${currentPage} #mgo, #form${currentPage} #mdo`
   );
-  const robListener = (e) => {
-    console.log(e);
-
-    robsInputs.forEach((i) => (i.required = !e.target.value.length));
-  };
-  robsInputs.forEach((i) => i.addEventListener("input", robListener));
+  let valid = false;
+  robsInputs.forEach((i) => {
+    i.value.length ? (valid = true) : false;
+  });
+  if (valid) {
+    robsInputs.forEach((i) => i.removeAttribute("required"));
+    return;
+  }
+  robsInputs.forEach((i) => i.setAttribute("required", true));
 };
 
 /* везде в масках применяем точку */
