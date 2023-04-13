@@ -9,7 +9,7 @@ let currentPage = "Sailing";
 let copyTextarea,
   saveBtn,
   copyBtn,
-  saveAndMailBtn,
+  mailBtn,
   loadBtn,
   loadInput,
   form,
@@ -28,7 +28,7 @@ const getElements = (page) => {
   copyTextarea = document.querySelector(`#form${currentPage} #copyTextarea`);
   saveBtn = document.querySelector(`#form${currentPage} #saveBtn`);
   copyBtn = document.querySelector(`#form${currentPage} #copyBtn`);
-  saveAndMailBtn = document.querySelector(`#form${currentPage} #mailBtn`);
+  mailBtn = document.querySelector(`#form${currentPage} #mailBtn`);
   loadBtn = document.querySelector(`#form${currentPage} #loadBtn`);
   loadInput = document.querySelector(`#form${currentPage} #loadInput`);
   form = document.getElementById(`form${page}`);
@@ -52,11 +52,12 @@ const setListeners = () => {
     navigator.clipboard.writeText(copyTextarea.value);
   });
 
-  form.addEventListener("input", (e) => {
+  form.addEventListener("input", () => {
     copyTextarea.innerText = "";
     copyTextarea.insertAdjacentHTML("afterBegin", getFormData());
     copyTextarea.insertAdjacentHTML("afterBegin", "------\n");
     copyTextarea.insertAdjacentHTML("afterBegin", getHumanReadableData());
+    robValidity();
   });
 
   saveBtn.addEventListener("click", () => {
@@ -64,9 +65,9 @@ const setListeners = () => {
     saveReport();
   });
 
-  saveAndMailBtn.addEventListener("click", () => {
+  mailBtn.addEventListener("click", () => {
     if (!form.checkValidity()) return;
-    saveReport();
+    // saveReport();
     sendMail();
   });
 
@@ -80,6 +81,7 @@ const setListeners = () => {
 
   document.addEventListener("DOMContentLoaded", () => {
     setLastVesselAndLastReportData();
+    robValidity();
   });
 
   inputLat?.addEventListener("input", function () {
@@ -139,10 +141,8 @@ const getHumanReadableData = () => {
     data.vesselImo || "n/a"
   }, MMSI: ${data.vesselMmsi || "n/a"}
 OBS.DT: ${data.vesselLocalTime ? formatDate(data.vesselLocalTime) : "n/a"}`;
-  const latLong = `Lat: ${data.latSn === "N" ? "" : "-"}${
-    data.latitude || "n/a"
-  }
-Long: ${data.longEw === "E" ? "" : "-"}${data.longtitude || "n/a"}`;
+  const latLong = `Lat: ${data.latitude ? data.latitude + data.latSn : "n/a"}
+Long: ${data.longtitude ? data.longtitude + data.longEw : "n/a"}`;
   const robs = `IFO380:  ${data.ifo380 ? data.ifo380 + " MT" : "n/a"}
 IFO180: ${data.ifo180 ? data.ifo180 + " MT" : "n/a"}
 VLSFO: ${data.vlsfo ? data.vlsfo + " MT" : "n/a"}
@@ -369,6 +369,8 @@ ${data.comment || ""}`;
 };
 
 const saveReport = () => {
+  console.log("www");
+
   setVesselToLocalStorage();
   setReportToLocalStorage();
   const data = getFormData();
@@ -380,15 +382,16 @@ const saveReport = () => {
 };
 
 const getReportName = () => {
+  const data = JSON.parse(getFormData());
   const date = new Intl.DateTimeFormat("locale", {
     dateStyle: "short",
     timeStyle: "short",
   })
-    .format(new Date())
+    .format(new Date(data.vesselLocalTime))
     .replaceAll("/", ".")
     .replace(":", "-")
     .replace(",", " ");
-  return `${currentPage} - ${date}`;
+  return `${data.vesselName} ${data.voyageNumber} ${currentPage} - ${date}`;
 };
 
 const sendMail = () => {
@@ -467,6 +470,18 @@ const formatDate = (date) => {
     dateStyle: "short",
     timeStyle: "short",
   }).format(date);
+};
+
+const robValidity = () => {
+  const robsInputs = document.querySelectorAll(
+    `#form${currentPage} #ifo180, #form${currentPage} #ifo380, #form${currentPage} #vlsfo, #form${currentPage} #ulsfo, #form${currentPage} #mgo, #form${currentPage} #mdo`
+  );
+  const robListener = (e) => {
+    console.log(e);
+
+    robsInputs.forEach((i) => (i.required = !e.target.value.length));
+  };
+  robsInputs.forEach((i) => i.addEventListener("input", robListener));
 };
 
 /* везде в масках применяем точку */
