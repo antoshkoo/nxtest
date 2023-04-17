@@ -62,7 +62,6 @@ const setListeners = () => {
 
   saveBtn.addEventListener("click", (e) => {
     if (!form.checkValidity()) return;
-    console.log("ss", e);
     saveReport();
   });
 
@@ -137,18 +136,18 @@ const getFormData = () => {
 
 const getHumanReadableData = () => {
   const data = JSON.parse(getFormData());
-  const vesselInfo = `Name: ${data.vesselName || "n/a"}, IMO: ${
-    data.vesselImo || "n/a"
-  }, MMSI: ${data.vesselMmsi || "n/a"}
-OBS.DT: ${data.vesselLocalTime ? formatDate(data.vesselLocalTime) : "n/a"}`;
-  const latLong = `Lat: ${data.latitude ? data.latitude + data.latSn : "n/a"}
-Long: ${data.longtitude ? data.longtitude + data.longEw : "n/a"}`;
-  const robs = `IFO380:  ${data.ifo380 ? data.ifo380 + " MT" : "n/a"}
-IFO180: ${data.ifo180 ? data.ifo180 + " MT" : "n/a"}
-VLSFO: ${data.vlsfo ? data.vlsfo + " MT" : "n/a"}
-ULSFO: ${data.ulsfo ? data.ulsfo + " MT" : "n/a"}
-MGO: ${data.mgo ? data.mgo + " MT" : "n/a"}
-MDO: ${data.mdo ? data.mdo + " MT" : "n/a"}`;
+  const vesselInfo = `Name: ${data.vesselName || ""}, IMO: ${
+    data.vesselImo || ""
+  }, MMSI: ${data.vesselMmsi || ""}
+OBS.DT: ${data.vesselLocalTime ? formatDate(data.vesselLocalTime) : ""}`;
+  const latLong = `Lat: ${data.latitude ? data.latitude + data.latSn : ""}
+Long: ${data.longtitude ? data.longtitude + data.longEw : ""}`;
+  const robs = `IFO380:  ${data.ifo380 ? data.ifo380 + " MT" : ""}
+IFO180: ${data.ifo180 ? data.ifo180 + " MT" : ""}
+VLSFO: ${data.vlsfo ? data.vlsfo + " MT" : ""}
+ULSFO: ${data.ulsfo ? data.ulsfo + " MT" : ""}
+MGO: ${data.mgo ? data.mgo + " MT" : ""}
+MDO: ${data.mdo ? data.mdo + " MT" : ""}`;
 
   switch (currentPage) {
     case "Sailing":
@@ -156,249 +155,83 @@ MDO: ${data.mdo ? data.mdo + " MT" : "n/a"}`;
 Voyage number: ${data.voyageNumber}
 ${vesselInfo}
 ${latLong}
-Next waypoint: ${data.nextRiverCanal || "n/a"}, ETA: ${
-        data.etaNextRiverCanal ? formatDate(data.etaNextRiverCanal) : "n/a"
+Next waypoint: ${data.nextRiverCanal || ""}, ETA: ${
+        data.etaNextRiverCanal ? formatDate(data.etaNextRiverCanal) : ""
       }
-Next port: ${data.nextPort || "n/a"}, ETA: ${
-        data.eta ? formatDate(data.eta) : "n/a"
-      }
-AVRPM: ${data.rpmLastReport || "n/a"}
-Average speed: ${data.avSpeed || "n/a"}
-Distance: ${data.distance || "n/a"}
+Next port: ${data.nextPort || ""}, ETA: ${data.eta ? formatDate(data.eta) : ""}
+AVRPM: ${data.rpmLastReport || ""}
+Average speed: ${data.avSpeed || ""}
+Distance: ${data.distance || ""}
 ${robs}
-Comment: ${data.comment || "n/a"}
+Comment: ${data.comment || ""}
 `;
     case "Departure":
       return `${currentPage} report:
 Voyage number: ${data.voyageNumber}
 ${vesselInfo}
-${latLong}
-Departure DT: ${data.factLocalTime ? formatDate(data.factLocalTime) : "n/a"}
-Next waypoint: ${data.nextRiverCanal || "n/a"}, ETA: ${
-        data.etaNextRiverCanal ? formatDate(data.etaNextRiverCanal) : "n/a"
+Departure port: ${data.departurePort || ""}
+Departure DT: ${data.factLocalTime ? formatDate(data.factLocalTime) : ""}
+Next waypoint: ${data.nextRiverCanal || ""}, ETA: ${
+        data.etaNextRiverCanal ? formatDate(data.etaNextRiverCanal) : ""
       }
-Destination port: ${data.nextPort || "n/a"}, ETA: ${
-        data.eta ? formatDate(data.eta) : "n/a"
+Destination port: ${data.destinationPort || ""}, ETA: ${
+        data.etaPortLocalTime ? formatDate(data.etaPortLocalTime) : ""
       }
 ${robs}
-Comment: ${data.comment || "n/a"}
+Comment: ${data.comment || ""}
 `;
     case "Stop":
       return `${currentPage} report:
 Voyage number: ${data.voyageNumber}
 ${vesselInfo}
 ${latLong}
-Stop canal: ${data.stopCanal || "n/a"}
-Stop DT: ${data.stopFactDate ? formatDate(data.stopFactDate) : "n/a"}
-Stop ETD: ${data.etd ? formatDate(data.etd) : "n/a"}
-Departure DT: ${data.factTime ? formatDate(data.factTime) : "n/a"}
-Next waypoint: ${data.nextRiverCanal || "n/a"}, ETA: ${
-        data.etaNextRiverCanal ? formatDate(data.etaNextRiverCanal) : "n/a"
+Stop canal: ${data.stopCanal || ""}
+Stop DT: ${data.stopFactDate ? formatDate(data.stopFactDate) : ""}
+Stop ETD: ${data.etd ? formatDate(data.etd) : ""}
+Departure DT: ${data.factTime ? formatDate(data.factTime) : ""}
+Next waypoint: ${data.nextRiverCanal || ""}, ETA: ${
+        data.etaNextRiverCanal ? formatDate(data.etaNextRiverCanal) : ""
       }
-Destination port: ${data.destinationPort || "n/a"}, ETA: ${
-        data.etaPortLocalTime ? formatDate(data.etaPortLocalTime) : "n/a"
+Destination port: ${data.destinationPort || ""}, ETA: ${
+        data.etaPortLocalTime ? formatDate(data.etaPortLocalTime) : ""
       }
 ${robs}
-Comment: ${data.comment || "n/a"}
+Comment: ${data.comment || ""}
 `;
     case "Arrival":
       return `${currentPage} report:
 Voyage number: ${data.voyageNumber}
 ${vesselInfo}
-${latLong}
-Arrival port: ${data.arrivalPort || "n/a"}
-NOR: ${data.nor ? formatDate(data.nor) : "n/a"}
-POB: ${data.pilotOnBoard ? formatDate(data.pilotOnBoard) : "n/a"}
-Arrival fact DT: ${data.factLocalTime ? formatDate(data.factLocalTime) : "n/a"}
-Next waypoint: ${data.nextRiverCanal || "n/a"}
+Arrival port: ${data.arrivalPort || ""}
+NOR: ${data.nor ? formatDate(data.nor) : ""}
+POB: ${data.pilotOnBoard ? formatDate(data.pilotOnBoard) : ""}
+Arrival fact DT: ${data.factLocalTime ? formatDate(data.factLocalTime) : ""}
 ${robs}
-Comment: ${data.comment || "n/a"}
+Comment: ${data.comment || ""}
 `;
     case "Load":
       return `${currentPage} report:
 Voyage number: ${data.voyageNumber}
 ${vesselInfo}
-Port name: ${data.portName || "n/a"}
-Departure ETD: ${data.etd ? formatDate(data.etd) : "n/a"}
-CRG#1: ${
-        data.loadCargo1
-          ? data.loadCargo1 +
-            ", Nominated: " +
-            (data.loadNominated1 || "n/a") +
-            ", Loaded: " +
-            (data.loadLoaded1 || "n/a") +
-            ", Started: " +
-            (data.loadStarted1 ? formatDate(data.loadStarted1) : "n/a") +
-            ", Finished: " +
-            (data.loadFinished1 ? formatDate(data.loadFinished1) : "n/a")
-          : "n/a"
-      }
-CRG#2: ${
-        data.loadCargo2
-          ? data.loadCargo2 +
-            ", Nominated: " +
-            (data.loadNominated2 || "n/a") +
-            ", Loaded: " +
-            (data.loadLoaded2 || "n/a") +
-            ", Started: " +
-            (data.loadStarted2 ? formatDate(data.loadStarted2) : "n/a") +
-            ", Finished: " +
-            (data.loadFinished2 ? formatDate(data.loadFinished2) : "n/a")
-          : "n/a"
-      }
-CRG#3: ${
-        data.loadCargo3
-          ? data.loadCargo3 +
-            ", Nominated: " +
-            (data.loadNominated3 || "n/a") +
-            ", Loaded: " +
-            (data.loadLoaded3 || "n/a") +
-            ", Started: " +
-            (data.loadStarted3 ? formatDate(data.loadStarted3) : "n/a") +
-            ", Finished: " +
-            (data.loadFinished3 ? formatDate(data.loadFinished3) : "n/a")
-          : "n/a"
-      }
-CRG#4: ${
-        data.loadCargo4
-          ? data.loadCargo4 +
-            ", Nominated: " +
-            (data.loadNominated4 || "n/a") +
-            ", Loaded: " +
-            (data.loadLoaded4 || "n/a") +
-            ", Started: " +
-            (data.loadStarted4 ? formatDate(data.loadStarted4) : "n/a") +
-            ", Finished: " +
-            (data.loadFinished4 ? formatDate(data.loadFinished4) : "n/a")
-          : "n/a"
-      }
-CRG#5: ${
-        data.loadCargo5
-          ? data.loadCargo5 +
-            ", Nominated: " +
-            (data.loadNominated5 || "n/a") +
-            ", Loaded: " +
-            (data.loadLoaded5 || "n/a") +
-            ", Started: " +
-            (data.loadStarted5 ? formatDate(data.loadStarted5) : "n/a") +
-            ", Finished: " +
-            (data.loadFinished5 ? formatDate(data.loadFinished5) : "n/a")
-          : "n/a"
-      }
-CRG#6: ${
-        data.loadCargo6
-          ? data.loadCargo6 +
-            ", Nominated: " +
-            (data.loadNominated6 || "n/a") +
-            ", Loaded: " +
-            (data.loadLoaded6 || "n/a") +
-            ", Started: " +
-            (data.loadStarted6 ? formatDate(data.loadStarted6) : "n/a") +
-            ", Finished: " +
-            (data.loadFinished6 ? formatDate(data.loadFinished6) : "n/a")
-          : "n/a"
-      }
+Port name: ${data.portName || ""}
+Departure ETD: ${data.etd ? formatDate(data.etd) : ""}
+${loadCargoHumanReadable(1, data)}
+${loadCargoHumanReadable(2, data)}
+${loadCargoHumanReadable(3, data)}
 ${robs}
-Comment: ${data.comment || "n/a"}
+Comment: ${data.comment || ""}
 `;
     case "Discharge":
       return `${currentPage} report:
 Voyage number: ${data.voyageNumber}
 ${vesselInfo}
-Port name: ${data.portName || "n/a"}
-Departure ETD: ${data.etd ? formatDate(data.etd) : "n/a"}
-CRG#1: ${
-        data.dischargeCargo1
-          ? data.dischargeCargo1 +
-            ", COB: " +
-            (data.dischargeQuantity1 || "n/a") +
-            ", Started: " +
-            (data.dischargeStarted1
-              ? formatDate(data.dischargeStarted1)
-              : "n/a") +
-            ", Finished: " +
-            (data.dischargeFinished1
-              ? formatDate(data.dischargeFinished1)
-              : "n/a")
-          : "n/a"
-      }
-CRG#2: ${
-        data.dischargeCargo2
-          ? data.dischargeCargo2 +
-            ", COB: " +
-            (data.dischargeQuantity2 || "n/a") +
-            ", Started: " +
-            (data.dischargeStarted2
-              ? formatDate(data.dischargeStarted2)
-              : "n/a") +
-            ", Finished: " +
-            (data.dischargeFinished2
-              ? formatDate(data.dischargeFinished2)
-              : "n/a")
-          : "n/a"
-      }
-CRG#3: ${
-        data.dischargeCargo3
-          ? data.dischargeCargo3 +
-            ", COB: " +
-            (data.dischargeQuantity3 || "n/a") +
-            ", Started: " +
-            (data.dischargeStarted3
-              ? formatDate(data.dischargeStarted3)
-              : "n/a") +
-            ", Finished: " +
-            (data.dischargeFinished3
-              ? formatDate(data.dischargeFinished3)
-              : "n/a")
-          : "n/a"
-      }
-CRG#4: ${
-        data.dischargeCargo4
-          ? data.dischargeCargo4 +
-            ", COB: " +
-            (data.dischargeQuantity4 || "n/a") +
-            ", Started: " +
-            (data.dischargeStarted4
-              ? formatDate(data.dischargeStarted4)
-              : "n/a") +
-            ", Finished: " +
-            (data.dischargeFinished4
-              ? formatDate(data.dischargeFinished4)
-              : "n/a")
-          : "n/a"
-      }
-CRG#5: ${
-        data.dischargeCargo5
-          ? data.dischargeCargo5 +
-            ", COB: " +
-            (data.dischargeQuantity5 || "n/a") +
-            ", Started: " +
-            (data.dischargeStarted5
-              ? formatDate(data.dischargeStarted5)
-              : "n/a") +
-            ", Finished: " +
-            (data.dischargeFinished5
-              ? formatDate(data.dischargeFinished5)
-              : "n/a")
-          : "n/a"
-      }
-CRG#6: ${
-        data.dischargeCargo6
-          ? data.dischargeCargo6 +
-            ", COB: " +
-            (data.dischargeQuantity6 || "n/a") +
-            ", Started: " +
-            (data.dischargeStarted6
-              ? formatDate(data.dischargeStarted6)
-              : "n/a") +
-            ", Finished: " +
-            (data.dischargeFinished6
-              ? formatDate(data.dischargeFinished6)
-              : "n/a")
-          : "n/a"
-      }
+Port name: ${data.portName || ""}
+Departure ETD: ${data.etd ? formatDate(data.etd) : ""}
+${dischargeCargoHumanReadable(1, data)}
+${dischargeCargoHumanReadable(2, data)}
+${dischargeCargoHumanReadable(3, data)}
 ${robs}
-Comment: ${data.comment || "n/a"}
+Comment: ${data.comment || ""}
 `;
     default:
       return `${vesselInfo}
@@ -408,8 +241,6 @@ ${data.comment || ""}`;
 };
 
 const saveReport = () => {
-  console.log("www");
-
   setVesselToLocalStorage();
   setReportToLocalStorage();
   const data = getFormData();
@@ -470,13 +301,17 @@ const setLoadedDataToForm = (data) => {
     if (data.key === "") return;
     const elem = document.querySelector(`#form${currentPage} #${key}`) || false;
     if (elem) elem.value = data[key];
-    copyTextarea.innerText = getFormData();
+    // copyTextarea.innerText = "";
+    // copyTextarea.insertAdjacentHTML("afterBegin", getFormData());
+    // copyTextarea.insertAdjacentHTML("afterBegin", "------\n");
+    // copyTextarea.insertAdjacentHTML("afterBegin", getHumanReadableData());
   }
 };
 
 const pages = document.querySelectorAll(".nav-link");
 pages.forEach((page) => {
   page.addEventListener("click", (e) => {
+    copyTextarea.innerHTML = "";
     const content = document.getElementById("pills-tabContent");
     content.innerHTML = content.innerHTML;
     let currentArea = e.target.getAttribute("aria-controls");
@@ -510,7 +345,7 @@ const setLastVesselAndLastReportData = () => {
 };
 
 const formatDate = (date) => {
-  date = new Date(date);
+  date = new Date(date) || "Invalid DT";
   return new Intl.DateTimeFormat("en-GB", {
     dateStyle: "short",
     timeStyle: "short",
@@ -530,6 +365,36 @@ const robValidity = () => {
     return;
   }
   robsInputs.forEach((i) => i.setAttribute("required", true));
+};
+
+const loadCargoHumanReadable = (number, data) => {
+  return `CRG#${number}: ${
+    data["lc" + number]
+      ? data["lc" + number] +
+        ", Nominated: " +
+        (data["ln" + number] || "") +
+        ", Loaded: " +
+        (data["ll" + number] || "") +
+        ", Started: " +
+        (data["ls" + number] ? formatDate(data["ls" + number]) : "") +
+        ", Finished: " +
+        (data["lf" + number] ? formatDate(data["lf" + number]) : "")
+      : ""
+  }`;
+};
+
+const dischargeCargoHumanReadable = (number, data) => {
+  return `CRG#${number}: ${
+    data["dc" + number]
+      ? data["dc" + number] +
+        ", COB: " +
+        (data["dq" + number] || "") +
+        ", Started: " +
+        (data["ds" + number] ? formatDate(data["dc" + number]) : "") +
+        ", Finished: " +
+        (data["df" + number] ? formatDate(data["df" + number]) : "")
+      : ""
+  }`;
 };
 
 /* везде в масках применяем точку */
