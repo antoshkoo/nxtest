@@ -3,7 +3,9 @@ import "../scss/styles.scss";
 import { Tab, Card } from "bootstrap";
 import { saveAs } from "file-saver";
 
-const _email = "vrs@pola-rise.ru";
+const _email =
+  "a.kholin@pola-rise.ru,operating@pola-rise.ru,chartering@pola-rise.ru";
+const _emailCC = "vrs@pola-rise.ru";
 
 let currentPage = "Sailing";
 let copyTextarea,
@@ -269,7 +271,7 @@ const sendMail = () => {
   const body = copyTextarea.value.replace(/\n\r?/g, "%0D");
   setTimeout(
     () =>
-      (document.location.href = `mailto:${_email}?subject=${reportName}&body=${body}`),
+      (document.location.href = `mailto:${_email}?subject=${reportName}&body=${body}&cc=${_emailCC}`),
     250
   );
 };
