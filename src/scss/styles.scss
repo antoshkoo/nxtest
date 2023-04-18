@@ -8,9 +8,12 @@ label {
   justify-content: space-between;
 }
 input:invalid,
-input:invalid:focus {
+input:invalid:focus,
+select.error-select,
+select:focus.error-select {
   border: 1px solid rgba(255, 0, 0, 0.5);
   box-shadow: 0 0 0 0.25rem rgba(255, 0, 0, 0.25);
+  color: gray;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -41,10 +44,9 @@ input[type="number"] {
 .gap-10px {
   gap: 10px;
 }
-// .form-floating > .form-control::placeholder {
-//   color: revert;
-// }
 
-// .form-floating > .form-control:not(:focus)::placeholder {
-//   color: transparent;
+// .item-second,
+// .item-third {
+//   opacity: 0.5;
+//   pointer-events: none;
 // }

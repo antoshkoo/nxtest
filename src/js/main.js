@@ -30,6 +30,8 @@ let copyTextarea,
   ulsfo,
   mgo,
   mdo,
+  // itemSecond,
+  // itemThird,
   spanLong;
 
 const getElements = (page) => {
@@ -58,6 +60,8 @@ const getElements = (page) => {
   ulsfo = document.querySelector(`#form${currentPage} #ulsfo`);
   mgo = document.querySelector(`#form${currentPage} #mgo`);
   mdo = document.querySelector(`#form${currentPage} #mdo`);
+  // itemSecond = document.querySelector(`#form${currentPage} .item-second`) || "";
+  // itemThird = document.querySelector(`#form${currentPage} .item-third`) || "";
 };
 
 const setListeners = () => {
@@ -256,6 +260,18 @@ ${dischargeCargoHumanReadable(3, data)}
 ${robs}
 Comment: ${data.comment || ""}
 `;
+    case "Bunker":
+      return `${currentPage} report:
+Voyage number: ${data.voyageNumber}
+${vesselInfo}
+Port name: ${data.portName || ""}
+Departure ETD: ${data.etd ? formatDate(data.etd) : ""}
+${bunkerHumanReadable(1, data)}
+${bunkerHumanReadable(2, data)}
+${bunkerHumanReadable(3, data)}
+${robs}
+Comment: ${data.comment || ""}
+`;
     default:
       return `${vesselInfo}
 ${robs}
@@ -266,12 +282,12 @@ ${data.comment || ""}`;
 const saveReport = () => {
   setVesselToLocalStorage();
   setReportToLocalStorage();
-  const data = getFormData();
-  const fileName = getReportName();
-  const file = new File([data], fileName, {
-    type: "application/json",
-  });
-  saveAs(file);
+  // const data = getFormData();
+  // const fileName = getReportName();
+  // const file = new File([data], fileName, {
+  //   type: "application/json",
+  // });
+  // saveAs(file);
 };
 
 const getReportName = () => {
@@ -345,6 +361,7 @@ pages.forEach((page) => {
     setListeners();
     setLastVesselAndLastReportData();
     robValidity();
+    bunkerValidity();
   });
 });
 
@@ -425,6 +442,43 @@ const dischargeCargoHumanReadable = (number, data) => {
       : ""
   }`;
 };
+
+const bunkerHumanReadable = (number, data) => {
+  if (
+    data["br" + number] === "Name" ||
+    data["br" + number] === "#2" ||
+    data["br" + number] === "#3"
+  )
+    return `Bunker#${number}`;
+  bunkerValidity();
+  return `Bunker#${number}: ${
+    data["br" + number]
+      ? data["br" + number].toUpperCase() +
+        ", Quantity: " +
+        (data["bq" + number] || "") +
+        ", Finished: " +
+        (data["bf" + number] ? formatDate(data["bf" + number]) : "")
+      : ""
+  }`;
+};
+
+const bunkerValidity = () => {
+  if (currentPage !== "Bunker") return;
+  const selected = document.getElementById("br1");
+  selected.options[selected.selectedIndex].text === "Name"
+    ? selected.classList.add("error-select")
+    : selected.classList.remove("error-select");
+};
+
+// const unblockNextRow = (number, data) => {
+//   console.log(data.reportType, itemSecond);
+
+//   if (number === 1) {
+//     itemSecond.classList.remove("item-second");
+//   } else if (number === 2) {
+//     itemThird.classList.remove("item-third");
+//   }
+// };
 
 /* везде в масках применяем точку */
 /*  IMO 7 цифр */
