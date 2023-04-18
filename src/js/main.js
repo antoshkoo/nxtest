@@ -19,7 +19,7 @@ let copyTextarea,
   vesselName,
   vesselImo,
   vesselMmsi,
-  vesselLocalTime,
+  obsDateLT,
   voyageNumber,
   inputLat,
   spanLat,
@@ -46,9 +46,7 @@ const getElements = (page) => {
   vesselName = document.querySelector(`#form${currentPage} #vesselName`);
   vesselImo = document.querySelector(`#form${currentPage} #vesselImo`);
   vesselMmsi = document.querySelector(`#form${currentPage} #vesselMmsi`);
-  vesselLocalTime = document.querySelector(
-    `#form${currentPage} #vesselLocalTime`
-  );
+  obsDateLT = document.querySelector(`#form${currentPage} #obsDateLT`);
   voyageNumber = document.querySelector(`#form${currentPage} #voyageNumber`);
   inputLat = document.querySelector(`#form${currentPage} .lat-input`);
   spanLat = document.querySelector(`#form${currentPage} .lat-span`);
@@ -129,7 +127,7 @@ const setVesselToLocalStorage = () => {
     vesselImo: vesselImo.value || "",
     vesselMmsi: vesselMmsi.value || "",
     voyageNumber: voyageNumber.value || "",
-    vesselLocalTime: vesselLocalTime.value || "",
+    obsDateLT: obsDateLT.value || "",
     ifo380: ifo380.value || "",
     ifo180: ifo180.value || "",
     vlsfo: vlsfo.value || "",
@@ -165,7 +163,7 @@ const getHumanReadableData = () => {
   const vesselInfo = `Name: ${data.vesselName || ""}, IMO: ${
     data.vesselImo || ""
   }, MMSI: ${data.vesselMmsi || ""}
-OBS.DT: ${data.vesselLocalTime ? formatDate(data.vesselLocalTime) : ""}`;
+Observe date (LT): ${data.obsDateLT ? formatDate(data.obsDateLT) : ""}`;
   const latLong = `Lat: ${data.latitude ? data.latitude + data.latSn : ""}
 Long: ${data.longtitude ? data.longtitude + data.longEw : ""}`;
   const robs = `IFO380:  ${data.ifo380 ? data.ifo380 + " MT" : ""}
@@ -182,9 +180,11 @@ Voyage number: ${data.voyageNumber}
 ${vesselInfo}
 ${latLong}
 Next waypoint: ${data.nextRiverCanal || ""}, ETA: ${
-        data.etaNextRiverCanal ? formatDate(data.etaNextRiverCanal) : ""
+        data.etaNextRiverCanalLT ? formatDate(data.etaNextRiverCanalLT) : ""
       }
-Next port: ${data.nextPort || ""}, ETA: ${data.eta ? formatDate(data.eta) : ""}
+Next port: ${data.nextPort || ""}, ETA: ${
+        data.etaNextPortLT ? formatDate(data.etaNextPortLT) : ""
+      }
 AVRPM: ${data.rpmLastReport || ""}
 Average speed: ${data.avSpeed || ""}
 Distance: ${data.distance || ""}
@@ -196,12 +196,12 @@ Comment: ${data.comment || ""}
 Voyage number: ${data.voyageNumber}
 ${vesselInfo}
 Departure port: ${data.departurePort || ""}
-Departure DT: ${data.factLocalTime ? formatDate(data.factLocalTime) : ""}
+Departure LT: ${data.departurePortLT ? formatDate(data.departurePortLT) : ""}
 Next waypoint: ${data.nextRiverCanal || ""}, ETA: ${
-        data.etaNextRiverCanal ? formatDate(data.etaNextRiverCanal) : ""
+        data.etaNextRiverCanalLT ? formatDate(data.etaNextRiverCanalLT) : ""
       }
 Destination port: ${data.destinationPort || ""}, ETA: ${
-        data.etaPortLocalTime ? formatDate(data.etaPortLocalTime) : ""
+        data.etaDestinationPortLT ? formatDate(data.etaDestinationPortLT) : ""
       }
 ${robs}
 Comment: ${data.comment || ""}
@@ -212,15 +212,15 @@ Voyage number: ${data.voyageNumber}
 ${vesselInfo}
 ${latLong}
 Stop canal: ${data.stopCanal || ""}
-Stop DT: ${data.stopFactDate ? formatDate(data.stopFactDate) : ""}
-Departure DT: ${data.departureTime ? formatDate(data.departureTime) : ""} ${
-        data.departureEstFact
-      }
+Stop date (LT): ${data.stopDateLT ? formatDate(data.stopDateLT) : ""}
+Departure time (LT): ${
+        data.departureTimeLT ? formatDate(data.departureTimeLT) : ""
+      } ${data.departureEstFact}
 Next waypoint: ${data.nextRiverCanal || ""}, ETA: ${
-        data.etaNextRiverCanal ? formatDate(data.etaNextRiverCanal) : ""
+        data.etaNextRiverCanalLT ? formatDate(data.etaNextRiverCanalLT) : ""
       }
 Destination port: ${data.destinationPort || ""}, ETA: ${
-        data.etaPortLocalTime ? formatDate(data.etaPortLocalTime) : ""
+        data.etaDestinationPortLT ? formatDate(data.etaDestinationPortLT) : ""
       }
 ${robs}
 Comment: ${data.comment || ""}
@@ -230,9 +230,9 @@ Comment: ${data.comment || ""}
 Voyage number: ${data.voyageNumber}
 ${vesselInfo}
 Arrival port: ${data.arrivalPort || ""}
-NOR: ${data.nor ? formatDate(data.nor) : ""}
-POB: ${data.pilotOnBoard ? formatDate(data.pilotOnBoard) : ""}
-Arrival fact DT: ${data.factLocalTime ? formatDate(data.factLocalTime) : ""}
+Arrival LT: ${data.arrivalPortLT ? formatDate(data.arrivalPortLT) : ""}
+POB: ${data.pilotOnBoardLT ? formatDate(data.pilotOnBoardLT) : ""}
+NOR: ${data.norLT ? formatDate(data.norLT) : ""}
 ${robs}
 Comment: ${data.comment || ""}
 `;
@@ -241,7 +241,7 @@ Comment: ${data.comment || ""}
 Voyage number: ${data.voyageNumber}
 ${vesselInfo}
 Port name: ${data.portName || ""}
-Departure ETD: ${data.etd ? formatDate(data.etd) : ""}
+ETD LT: ${data.portNameEtd ? formatDate(data.portNameEtd) : ""}
 ${loadCargoHumanReadable(1, data)}
 ${loadCargoHumanReadable(2, data)}
 ${loadCargoHumanReadable(3, data)}
@@ -253,7 +253,7 @@ Comment: ${data.comment || ""}
 Voyage number: ${data.voyageNumber}
 ${vesselInfo}
 Port name: ${data.portName || ""}
-Departure ETD: ${data.etd ? formatDate(data.etd) : ""}
+ETD LT: ${data.portNameEtd ? formatDate(data.portNameEtd) : ""}
 ${dischargeCargoHumanReadable(1, data)}
 ${dischargeCargoHumanReadable(2, data)}
 ${dischargeCargoHumanReadable(3, data)}
@@ -296,7 +296,7 @@ const getReportName = () => {
     dateStyle: "short",
     timeStyle: "short",
   })
-    .format(new Date(data.vesselLocalTime))
+    .format(new Date(data.obsDateLT))
     .replaceAll("/", ".")
     .replace(":", "-")
     .replace(",", " ");
@@ -377,7 +377,7 @@ const setLastVesselAndLastReportData = () => {
     vesselImo.value = data.vesselImo || "";
     vesselMmsi.value = data.vesselMmsi || "";
     voyageNumber.value = data.voyageNumber || "";
-    vesselLocalTime.value = data.vesselLocalTime || "";
+    obsDateLT.value = data.obsDateLT || "";
     ifo380.value = data.ifo380 || "";
     ifo180.value = data.ifo180 || "";
     vlsfo.value = data.vlsfo || "";
