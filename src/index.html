@@ -183,7 +183,7 @@
                         class="form-control"
                         id="vesselName"
                         name="vesselName"
-                        placeholder="Pola Fiva"
+                        placeholder="Name"
                         required
                       />
                     </div>
@@ -238,7 +238,7 @@
                   <div class="row">
                     <div class="col">
                       <div class="card bg-light">
-                        <div class="card-body">
+                        <div class="card-body d-flex flex-column gap-3">
                           <div class="row">
                             <div class="col">
                               <label for="latitude" class="form-label"
@@ -333,14 +333,6 @@
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col">
-                      <div class="card bg-light">
-                        <div class="card-body d-flex flex-column gap-3">
                           <div class="row">
                             <div class="col">
                               <label for="stopCanal" class="form-label"
@@ -396,6 +388,14 @@
                               />
                             </div>
                           </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <div class="card bg-light">
+                        <div class="card-body d-flex flex-column gap-3">
                           <div class="row">
                             <div class="col">
                               <label for="nextRiverCanal" class="form-label"
@@ -558,9 +558,6 @@
                   </div>
                 </div>
                 <div class="col-3 d-flex flex-column gap-3">
-                  <h6 class="card-title">
-                    Copy this text and send to operational mailbox
-                  </h6>
                   <textarea
                     class="form-control flex-grow-1"
                     name="copyTextarea"
@@ -589,6 +586,15 @@
                       <div class="col-4">
                         <button
                           type="button"
+                          class="btn btn-secondary w-100"
+                          id="mailBtn"
+                        >
+                          Mail
+                        </button>
+                      </div>
+                      <div class="col-4 d-none">
+                        <button
+                          type="button"
                           class="btn btn-outline-dark w-100"
                           id="loadBtn"
                         >
@@ -596,13 +602,6 @@
                         </button>
                       </div>
                     </div>
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      id="mailBtn"
-                    >
-                      Mail
-                    </button>
                   </div>
                 </div>
               </div>
@@ -718,6 +717,7 @@
                                 id="factLocalTime"
                                 name="factLocalTime"
                                 placeholder="00/00/0000 00:00"
+                                required
                               />
                             </div>
                           </div>
@@ -885,9 +885,6 @@
                   </div>
                 </div>
                 <div class="col-3 d-flex flex-column gap-3">
-                  <h6 class="card-title">
-                    Copy this text and send to operational mailbox
-                  </h6>
                   <textarea
                     class="form-control flex-grow-1"
                     name="copyTextarea"
@@ -916,6 +913,15 @@
                       <div class="col-4">
                         <button
                           type="button"
+                          class="btn btn-secondary w-100"
+                          id="mailBtn"
+                        >
+                          Mail
+                        </button>
+                      </div>
+                      <div class="col-4 d-none">
+                        <button
+                          type="button"
                           class="btn btn-outline-dark w-100"
                           id="loadBtn"
                         >
@@ -923,13 +929,6 @@
                         </button>
                       </div>
                     </div>
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      id="mailBtn"
-                    >
-                      Mail
-                    </button>
                   </div>
                 </div>
               </div>
@@ -1124,6 +1123,33 @@
                         <div class="card-body d-flex flex-column gap-3">
                           <div class="row">
                             <div class="col">
+                              <label for="nextRiverCanal" class="form-label"
+                                >Next river/canal enter</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="nextRiverCanal"
+                                name="nextRiverCanal"
+                                placeholder="River/canal name"
+                              />
+                            </div>
+                            <div class="col">
+                              <label for="etaNextRiverCanal" class="form-label"
+                                >ETA (Destination time)</label
+                              >
+                              <input
+                                type="datetime-local"
+                                max="9999-12-31T23:59"
+                                class="form-control"
+                                id="etaNextRiverCanal"
+                                name="etaNextRiverCanal"
+                                placeholder="00/00/0000 00:00"
+                              />
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
                               <label for="nextPort" class="form-label"
                                 >Next port</label
                               >
@@ -1148,33 +1174,6 @@
                                 name="eta"
                                 placeholder="00/00/0000 00:00"
                                 required
-                              />
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col">
-                              <label for="nextRiverCanal" class="form-label"
-                                >Next river/canal enter</label
-                              >
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="nextRiverCanal"
-                                name="nextRiverCanal"
-                                placeholder="River/canal name"
-                              />
-                            </div>
-                            <div class="col">
-                              <label for="etaNextRiverCanal" class="form-label"
-                                >ETA (Destination time)</label
-                              >
-                              <input
-                                type="datetime-local"
-                                max="9999-12-31T23:59"
-                                class="form-control"
-                                id="etaNextRiverCanal"
-                                name="etaNextRiverCanal"
-                                placeholder="00/00/0000 00:00"
                               />
                             </div>
                           </div>
@@ -1336,9 +1335,6 @@
                   </div>
                 </div>
                 <div class="col-3 d-flex flex-column gap-3">
-                  <h6 class="card-title">
-                    Copy this text and send to operational mailbox
-                  </h6>
                   <textarea
                     class="form-control flex-grow-1"
                     name="copyTextarea"
@@ -1367,6 +1363,15 @@
                       <div class="col-4">
                         <button
                           type="button"
+                          class="btn btn-secondary w-100"
+                          id="mailBtn"
+                        >
+                          Mail
+                        </button>
+                      </div>
+                      <div class="col-4 d-none">
+                        <button
+                          type="button"
                           class="btn btn-outline-dark w-100"
                           id="loadBtn"
                         >
@@ -1374,13 +1379,6 @@
                         </button>
                       </div>
                     </div>
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      id="mailBtn"
-                    >
-                      Mail
-                    </button>
                   </div>
                 </div>
               </div>
@@ -1486,16 +1484,17 @@
                               />
                             </div>
                             <div class="col">
-                              <label for="nor" class="form-label"
-                                >NoR, local port time</label
+                              <label for="factLocalTime" class="form-label"
+                                >Arrival, fact local time</label
                               >
                               <input
                                 type="datetime-local"
                                 max="9999-12-31T23:59"
                                 class="form-control"
-                                id="nor"
-                                name="nor"
+                                id="factLocalTime"
+                                name="factLocalTime"
                                 placeholder="00/00/0000 00:00"
+                                required
                               />
                             </div>
                           </div>
@@ -1514,17 +1513,16 @@
                               />
                             </div>
                             <div class="col">
-                              <label for="factLocalTime" class="form-label"
-                                >Arrival, fact local time</label
+                              <label for="nor" class="form-label"
+                                >NoR, local port time</label
                               >
                               <input
                                 type="datetime-local"
                                 max="9999-12-31T23:59"
                                 class="form-control"
-                                id="factLocalTime"
-                                name="factLocalTime"
+                                id="nor"
+                                name="nor"
                                 placeholder="00/00/0000 00:00"
-                                required
                               />
                             </div>
                           </div>
@@ -1636,9 +1634,6 @@
                   </div>
                 </div>
                 <div class="col-3 d-flex flex-column gap-3">
-                  <h6 class="card-title">
-                    Copy this text and send to operational mailbox
-                  </h6>
                   <textarea
                     class="form-control flex-grow-1"
                     name="copyTextarea"
@@ -1667,6 +1662,15 @@
                       <div class="col-4">
                         <button
                           type="button"
+                          class="btn btn-secondary w-100"
+                          id="mailBtn"
+                        >
+                          Mail
+                        </button>
+                      </div>
+                      <div class="col-4 d-none">
+                        <button
+                          type="button"
                           class="btn btn-outline-dark w-100"
                           id="loadBtn"
                         >
@@ -1674,13 +1678,6 @@
                         </button>
                       </div>
                     </div>
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      id="mailBtn"
-                    >
-                      Mail
-                    </button>
                   </div>
                 </div>
               </div>
@@ -2078,9 +2075,6 @@
                   </div>
                 </div>
                 <div class="col-3 d-flex flex-column gap-3">
-                  <h6 class="card-title">
-                    Copy this text and send to operational mailbox
-                  </h6>
                   <textarea
                     class="form-control flex-grow-1"
                     name="copyTextarea"
@@ -2109,6 +2103,15 @@
                       <div class="col-4">
                         <button
                           type="button"
+                          class="btn btn-secondary w-100"
+                          id="mailBtn"
+                        >
+                          Mail
+                        </button>
+                      </div>
+                      <div class="col-4 d-none">
+                        <button
+                          type="button"
                           class="btn btn-outline-dark w-100"
                           id="loadBtn"
                         >
@@ -2116,13 +2119,6 @@
                         </button>
                       </div>
                     </div>
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      id="mailBtn"
-                    >
-                      Mail
-                    </button>
                   </div>
                 </div>
               </div>
@@ -2488,9 +2484,6 @@
                   </div>
                 </div>
                 <div class="col-3 d-flex flex-column gap-3">
-                  <h6 class="card-title">
-                    Copy this text and send to operational mailbox
-                  </h6>
                   <textarea
                     class="form-control flex-grow-1"
                     name="copyTextarea"
@@ -2519,6 +2512,15 @@
                       <div class="col-4">
                         <button
                           type="button"
+                          class="btn btn-secondary w-100"
+                          id="mailBtn"
+                        >
+                          Mail
+                        </button>
+                      </div>
+                      <div class="col-4 d-none">
+                        <button
+                          type="button"
                           class="btn btn-outline-dark w-100"
                           id="loadBtn"
                         >
@@ -2526,13 +2528,6 @@
                         </button>
                       </div>
                     </div>
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      id="mailBtn"
-                    >
-                      Mail
-                    </button>
                   </div>
                 </div>
               </div>
