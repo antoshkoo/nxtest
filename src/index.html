@@ -203,7 +203,7 @@
                     </div>
                     <div class="col">
                       <label for="vesselImo" class="form-label"
-                        >Vessel IMO*
+                        >Vessel IMO
                         <span class="imo-span small"
                           >Must contain 7 digits</span
                         ></label
@@ -236,7 +236,7 @@
                     </div>
                     <div class="col">
                       <label for="vesselLocalTime" class="form-label"
-                        >Observe date, local time</label
+                        >Observe date (LT)</label
                       >
                       <input
                         type="datetime-local"
@@ -256,7 +256,7 @@
                           <div class="row">
                             <div class="col">
                               <label for="latitude" class="form-label"
-                                >Latitude*
+                                >Latitude
                                 <span class="lat-span small"
                                   >Format: 00.00.00</span
                                 ></label
@@ -302,7 +302,7 @@
                             </div>
                             <div class="col">
                               <label for="longtitude" class="form-label"
-                                >Longtitude*
+                                >Longtitude
                                 <span class="long-span small"
                                   >Format: 000.00.00</span
                                 ></label
@@ -362,7 +362,7 @@
                             </div>
                             <div class="col">
                               <label for="stopFactDate" class="form-label"
-                                >Stop, fact date</label
+                                >Stop date (LT)</label
                               >
                               <input
                                 type="datetime-local"
@@ -378,7 +378,7 @@
                           <div class="row">
                             <div class="col-6">
                               <label for="latitude" class="form-label"
-                                >Departure time
+                                >Departure time (LT)
                               </label>
                               <input
                                 type="datetime-local"
@@ -443,7 +443,7 @@
                             </div>
                             <div class="col">
                               <label for="etaNextRiverCanal" class="form-label"
-                                >ETA (Destination time)</label
+                                >ETA (Waypoint LT)</label
                               >
                               <input
                                 type="datetime-local"
@@ -470,7 +470,7 @@
                             </div>
                             <div class="col">
                               <label for="etaPortLocalTime" class="form-label"
-                                >ETA, port local time</label
+                                >ETA (Port LT)</label
                               >
                               <input
                                 type="datetime-local"
@@ -597,7 +597,7 @@
                   ></textarea>
                   <div class="d-flex flex-column gap-3">
                     <div class="row">
-                      <div class="col-4">
+                      <div class="col-6">
                         <button
                           type="button"
                           class="btn btn-success w-100"
@@ -606,22 +606,13 @@
                           Copy
                         </button>
                       </div>
-                      <div class="col-4">
+                      <div class="col-6">
                         <button
                           type="button"
                           class="btn btn-primary w-100"
                           id="saveBtn"
                         >
                           Save
-                        </button>
-                      </div>
-                      <div class="col-4">
-                        <button
-                          type="button"
-                          class="btn btn-secondary w-100"
-                          id="mailBtn"
-                        >
-                          Mail
                         </button>
                       </div>
                       <div class="col-4 d-none">
@@ -631,6 +622,17 @@
                           id="loadBtn"
                         >
                           Load
+                        </button>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <button
+                          type="button"
+                          class="btn btn-secondary w-100"
+                          id="mailBtn"
+                        >
+                          Mail
                         </button>
                       </div>
                     </div>
@@ -674,7 +676,7 @@
                     </div>
                     <div class="col">
                       <label for="vesselImo" class="form-label"
-                        >Vessel IMO*
+                        >Vessel IMO
                         <span class="imo-span small"
                           >Must contain 7 digits</span
                         ></label
@@ -707,7 +709,7 @@
                     </div>
                     <div class="col">
                       <label for="vesselLocalTime" class="form-label"
-                        >Observe date, local time</label
+                        >Observe date (LT)</label
                       >
                       <input
                         type="datetime-local"
@@ -740,7 +742,7 @@
                             </div>
                             <div class="col">
                               <label for="factLocalTime" class="form-label"
-                                >Departure, fact local time</label
+                                >Departure (LT)</label
                               >
                               <input
                                 type="datetime-local"
@@ -768,7 +770,7 @@
                             </div>
                             <div class="col">
                               <label for="etaNextRiverCanal" class="form-label"
-                                >ETA (Destination time)</label
+                                >ETA (Waypoint LT)</label
                               >
                               <input
                                 type="datetime-local"
@@ -796,7 +798,7 @@
                             </div>
                             <div class="col">
                               <label for="etaPortLocalTime" class="form-label"
-                                >ETA, port local time</label
+                                >ETA (Port LT)</label
                               >
                               <input
                                 type="datetime-local"
@@ -924,7 +926,7 @@
                   ></textarea>
                   <div class="d-flex flex-column gap-3">
                     <div class="row">
-                      <div class="col-4">
+                      <div class="col-6">
                         <button
                           type="button"
                           class="btn btn-success w-100"
@@ -933,22 +935,13 @@
                           Copy
                         </button>
                       </div>
-                      <div class="col-4">
+                      <div class="col-6">
                         <button
                           type="button"
                           class="btn btn-primary w-100"
                           id="saveBtn"
                         >
                           Save
-                        </button>
-                      </div>
-                      <div class="col-4">
-                        <button
-                          type="button"
-                          class="btn btn-secondary w-100"
-                          id="mailBtn"
-                        >
-                          Mail
                         </button>
                       </div>
                       <div class="col-4 d-none">
@@ -958,6 +951,17 @@
                           id="loadBtn"
                         >
                           Load
+                        </button>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <button
+                          type="button"
+                          class="btn btn-secondary w-100"
+                          id="mailBtn"
+                        >
+                          Mail
                         </button>
                       </div>
                     </div>
@@ -1001,7 +1005,7 @@
                     </div>
                     <div class="col">
                       <label for="vesselImo" class="form-label"
-                        >Vessel IMO*
+                        >Vessel IMO
                         <span class="imo-span small"
                           >Must contain 7 digits</span
                         ></label
@@ -1034,7 +1038,7 @@
                     </div>
                     <div class="col">
                       <label for="vesselLocalTime" class="form-label"
-                        >Observe date, local time</label
+                        >Observe date (LT)</label
                       >
                       <input
                         type="datetime-local"
@@ -1054,7 +1058,7 @@
                           <div class="row">
                             <div class="col">
                               <label for="latitude" class="form-label"
-                                >Latitude*
+                                >Latitude
                                 <span class="lat-span small"
                                   >Format: 00.00.00</span
                                 ></label
@@ -1100,7 +1104,7 @@
                             </div>
                             <div class="col">
                               <label for="longtitude" class="form-label"
-                                >Longtitude*
+                                >Longtitude
                                 <span class="long-span small"
                                   >Format: 000.00.00</span
                                 ></label
@@ -1168,7 +1172,7 @@
                             </div>
                             <div class="col">
                               <label for="etaNextRiverCanal" class="form-label"
-                                >ETA (Destination time)</label
+                                >ETA (Waypoint LT)</label
                               >
                               <input
                                 type="datetime-local"
@@ -1196,7 +1200,7 @@
                             </div>
                             <div class="col">
                               <label for="eta" class="form-label"
-                                >ETA (Destination time)</label
+                                >ETA (Port LT)</label
                               >
                               <input
                                 type="datetime-local"
@@ -1225,7 +1229,7 @@
                             </div>
                             <div class="col">
                               <label for="distance" class="form-label"
-                                >Distance traveled, NM*
+                                >Distance traveled, NM
                                 <span class="dist-span small"
                                   >Format: 000000.00</span
                                 ></label
@@ -1374,7 +1378,7 @@
                   ></textarea>
                   <div class="d-flex flex-column gap-3">
                     <div class="row">
-                      <div class="col-4">
+                      <div class="col-6">
                         <button
                           type="button"
                           class="btn btn-success w-100"
@@ -1383,22 +1387,13 @@
                           Copy
                         </button>
                       </div>
-                      <div class="col-4">
+                      <div class="col-6">
                         <button
                           type="button"
                           class="btn btn-primary w-100"
                           id="saveBtn"
                         >
                           Save
-                        </button>
-                      </div>
-                      <div class="col-4">
-                        <button
-                          type="button"
-                          class="btn btn-secondary w-100"
-                          id="mailBtn"
-                        >
-                          Mail
                         </button>
                       </div>
                       <div class="col-4 d-none">
@@ -1408,6 +1403,17 @@
                           id="loadBtn"
                         >
                           Load
+                        </button>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <button
+                          type="button"
+                          class="btn btn-secondary w-100"
+                          id="mailBtn"
+                        >
+                          Mail
                         </button>
                       </div>
                     </div>
@@ -1451,7 +1457,7 @@
                     </div>
                     <div class="col">
                       <label for="vesselImo" class="form-label"
-                        >Vessel IMO*
+                        >Vessel IMO
                         <!-- <span class="imo-span small"
                           >Must contain 7 digits</span
                         > -->
@@ -1484,7 +1490,7 @@
                     </div>
                     <div class="col">
                       <label for="vesselLocalTime" class="form-label"
-                        >Observe date, local time</label
+                        >Observe date (LT)</label
                       >
                       <input
                         type="datetime-local"
@@ -1517,7 +1523,7 @@
                             </div>
                             <div class="col">
                               <label for="factLocalTime" class="form-label"
-                                >Arrival, fact local time</label
+                                >Arrival (LT)</label
                               >
                               <input
                                 type="datetime-local"
@@ -1533,7 +1539,7 @@
                           <div class="row">
                             <div class="col">
                               <label for="pilotOnBoard" class="form-label"
-                                >Pilot on Board, local time</label
+                                >Pilot on Board (LT)</label
                               >
                               <input
                                 type="datetime-local"
@@ -1546,7 +1552,7 @@
                             </div>
                             <div class="col">
                               <label for="nor" class="form-label"
-                                >NoR, local port time</label
+                                >NoR (LT)</label
                               >
                               <input
                                 type="datetime-local"
@@ -1673,7 +1679,7 @@
                   ></textarea>
                   <div class="d-flex flex-column gap-3">
                     <div class="row">
-                      <div class="col-4">
+                      <div class="col-6">
                         <button
                           type="button"
                           class="btn btn-success w-100"
@@ -1682,22 +1688,13 @@
                           Copy
                         </button>
                       </div>
-                      <div class="col-4">
+                      <div class="col-6">
                         <button
                           type="button"
                           class="btn btn-primary w-100"
                           id="saveBtn"
                         >
                           Save
-                        </button>
-                      </div>
-                      <div class="col-4">
-                        <button
-                          type="button"
-                          class="btn btn-secondary w-100"
-                          id="mailBtn"
-                        >
-                          Mail
                         </button>
                       </div>
                       <div class="col-4 d-none">
@@ -1707,6 +1704,17 @@
                           id="loadBtn"
                         >
                           Load
+                        </button>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <button
+                          type="button"
+                          class="btn btn-secondary w-100"
+                          id="mailBtn"
+                        >
+                          Mail
                         </button>
                       </div>
                     </div>
@@ -1750,7 +1758,7 @@
                     </div>
                     <div class="col">
                       <label for="vesselImo" class="form-label"
-                        >Vessel IMO*
+                        >Vessel IMO
                         <span class="imo-span small"
                           >Must contain 7 digits</span
                         >
@@ -1783,7 +1791,7 @@
                     </div>
                     <div class="col">
                       <label for="vesselLocalTime" class="form-label"
-                        >Observe date, local time</label
+                        >Observe date (LT)</label
                       >
                       <input
                         type="datetime-local"
@@ -1816,7 +1824,7 @@
                             </div>
                             <div class="col">
                               <label for="etd" class="form-label"
-                                >Departure, ETD</label
+                                >ETD (LT)</label
                               >
                               <input
                                 type="datetime-local"
@@ -1874,7 +1882,7 @@
                               />
                             </div>
                             <div class="col" style="width: 204px">
-                              <label class="form-label">Started</label>
+                              <label class="form-label">Started (LT)</label>
                               <input
                                 type="datetime-local"
                                 max="9999-12-31T23:59"
@@ -1886,7 +1894,7 @@
                               />
                             </div>
                             <div class="col" style="width: 204px">
-                              <label class="form-label">Finished</label>
+                              <label class="form-label">Finished (LT)</label>
                               <input
                                 type="datetime-local"
                                 max="9999-12-31T23:59"
@@ -2114,7 +2122,7 @@
                   ></textarea>
                   <div class="d-flex flex-column gap-3">
                     <div class="row">
-                      <div class="col-4">
+                      <div class="col-6">
                         <button
                           type="button"
                           class="btn btn-success w-100"
@@ -2123,22 +2131,13 @@
                           Copy
                         </button>
                       </div>
-                      <div class="col-4">
+                      <div class="col-6">
                         <button
                           type="button"
                           class="btn btn-primary w-100"
                           id="saveBtn"
                         >
                           Save
-                        </button>
-                      </div>
-                      <div class="col-4">
-                        <button
-                          type="button"
-                          class="btn btn-secondary w-100"
-                          id="mailBtn"
-                        >
-                          Mail
                         </button>
                       </div>
                       <div class="col-4 d-none">
@@ -2148,6 +2147,17 @@
                           id="loadBtn"
                         >
                           Load
+                        </button>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <button
+                          type="button"
+                          class="btn btn-secondary w-100"
+                          id="mailBtn"
+                        >
+                          Mail
                         </button>
                       </div>
                     </div>
@@ -2191,7 +2201,7 @@
                     </div>
                     <div class="col">
                       <label for="vesselImo" class="form-label"
-                        >Vessel IMO*
+                        >Vessel IMO
                         <span class="imo-span small"
                           >Must contain 7 digits</span
                         >
@@ -2224,7 +2234,7 @@
                     </div>
                     <div class="col">
                       <label for="vesselLocalTime" class="form-label"
-                        >Observe date, local time</label
+                        >Observe date (LT)</label
                       >
                       <input
                         type="datetime-local"
@@ -2257,7 +2267,7 @@
                             </div>
                             <div class="col">
                               <label for="etd" class="form-label"
-                                >Departure, ETD</label
+                                >ETD (LT)</label
                               >
                               <input
                                 type="datetime-local"
@@ -2303,7 +2313,7 @@
                               />
                             </div>
                             <div class="col" style="width: 204px">
-                              <label class="form-label">Started</label>
+                              <label class="form-label">Started (LT)</label>
                               <input
                                 type="datetime-local"
                                 max="9999-12-31T23:59"
@@ -2315,7 +2325,7 @@
                               />
                             </div>
                             <div class="col" style="width: 204px">
-                              <label class="form-label">Finished</label>
+                              <label class="form-label">Finished (LT)</label>
                               <input
                                 type="datetime-local"
                                 max="9999-12-31T23:59"
@@ -2523,7 +2533,7 @@
                   ></textarea>
                   <div class="d-flex flex-column gap-3">
                     <div class="row">
-                      <div class="col-4">
+                      <div class="col-6">
                         <button
                           type="button"
                           class="btn btn-success w-100"
@@ -2532,22 +2542,13 @@
                           Copy
                         </button>
                       </div>
-                      <div class="col-4">
+                      <div class="col-6">
                         <button
                           type="button"
                           class="btn btn-primary w-100"
                           id="saveBtn"
                         >
                           Save
-                        </button>
-                      </div>
-                      <div class="col-4">
-                        <button
-                          type="button"
-                          class="btn btn-secondary w-100"
-                          id="mailBtn"
-                        >
-                          Mail
                         </button>
                       </div>
                       <div class="col-4 d-none">
@@ -2557,6 +2558,17 @@
                           id="loadBtn"
                         >
                           Load
+                        </button>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <button
+                          type="button"
+                          class="btn btn-secondary w-100"
+                          id="mailBtn"
+                        >
+                          Mail
                         </button>
                       </div>
                     </div>
@@ -2600,7 +2612,7 @@
                     </div>
                     <div class="col">
                       <label for="vesselImo" class="form-label"
-                        >Vessel IMO*
+                        >Vessel IMO
                         <span class="imo-span small"
                           >Must contain 7 digits</span
                         >
@@ -2633,7 +2645,7 @@
                     </div>
                     <div class="col">
                       <label for="vesselLocalTime" class="form-label"
-                        >Observe date, local time</label
+                        >Observe date (LT)</label
                       >
                       <input
                         type="datetime-local"
@@ -2666,7 +2678,7 @@
                             </div>
                             <div class="col">
                               <label for="etd" class="form-label"
-                                >Departure, ETD</label
+                                >ETD (LT)</label
                               >
                               <input
                                 type="datetime-local"
@@ -2696,7 +2708,7 @@
                                 name="br1"
                                 required
                               >
-                                <option value="Name" selected disabled>
+                                <option value="Name" hidden disabled>
                                   Name
                                 </option>
                                 <option value="ifo380">IFO380</option>
@@ -2720,7 +2732,7 @@
                               />
                             </div>
                             <div class="col" style="width: 204px">
-                              <label class="form-label">Finished</label>
+                              <label class="form-label">Finished (LT)</label>
                               <input
                                 type="datetime-local"
                                 max="9999-12-31T23:59"
@@ -2829,7 +2841,7 @@
                   </div>
                   <div class="card bg-light">
                     <div class="card-body d-flex flex-column gap-3">
-                      <h6>ROB at observe date</h6>
+                      <h6>ROB after liftings</h6>
                       <div>
                         <label for="ifo380" class="form-label">IFO 380</label>
                         <input
@@ -2913,7 +2925,7 @@
                   ></textarea>
                   <div class="d-flex flex-column gap-3">
                     <div class="row">
-                      <div class="col-4">
+                      <div class="col-6">
                         <button
                           type="button"
                           class="btn btn-success w-100"
@@ -2922,22 +2934,13 @@
                           Copy
                         </button>
                       </div>
-                      <div class="col-4">
+                      <div class="col-6">
                         <button
                           type="button"
                           class="btn btn-primary w-100"
                           id="saveBtn"
                         >
                           Save
-                        </button>
-                      </div>
-                      <div class="col-4">
-                        <button
-                          type="button"
-                          class="btn btn-secondary w-100"
-                          id="mailBtn"
-                        >
-                          Mail
                         </button>
                       </div>
                       <div class="col-4 d-none">
@@ -2947,6 +2950,17 @@
                           id="loadBtn"
                         >
                           Load
+                        </button>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <button
+                          type="button"
+                          class="btn btn-secondary w-100"
+                          id="mailBtn"
+                        >
+                          Mail
                         </button>
                       </div>
                     </div>
