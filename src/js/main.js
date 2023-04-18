@@ -209,8 +209,9 @@ ${vesselInfo}
 ${latLong}
 Stop canal: ${data.stopCanal || ""}
 Stop DT: ${data.stopFactDate ? formatDate(data.stopFactDate) : ""}
-Stop ETD: ${data.etd ? formatDate(data.etd) : ""}
-Departure DT: ${data.factTime ? formatDate(data.factTime) : ""}
+Departure DT: ${data.departureTime ? formatDate(data.departureTime) : ""} ${
+        data.departureEstFact
+      }
 Next waypoint: ${data.nextRiverCanal || ""}, ETA: ${
         data.etaNextRiverCanal ? formatDate(data.etaNextRiverCanal) : ""
       }

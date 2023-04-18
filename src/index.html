@@ -362,6 +362,51 @@
                             </div>
                           </div>
                           <div class="row">
+                            <div class="col-6">
+                              <label for="latitude" class="form-label"
+                                >Departure time
+                              </label>
+                              <input
+                                type="datetime-local"
+                                max="9999-12-31T23:59"
+                                class="form-control"
+                                id="departureTime"
+                                name="departureTime"
+                                placeholder="00/00/0000"
+                                required
+                              />
+                            </div>
+                            <div
+                              class="col-2 d-flex align-items-end gap-2 pb-1"
+                            >
+                              <div class="form-check">
+                                <input
+                                  class="form-check-input"
+                                  type="radio"
+                                  name="departureEstFact"
+                                  value="EST"
+                                  id="est"
+                                  checked
+                                />
+                                <label class="form-check-label" for="N">
+                                  EST
+                                </label>
+                              </div>
+                              <div class="form-check">
+                                <input
+                                  class="form-check-input"
+                                  type="radio"
+                                  name="departureEstFact"
+                                  value="FACT"
+                                  id="fact"
+                                />
+                                <label class="form-check-label" for="W">
+                                  FACT
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- <div class="row">
                             <div class="col">
                               <label for="etd" class="form-label">ETD</label>
                               <input
@@ -387,7 +432,7 @@
                                 placeholder="00:00"
                               />
                             </div>
-                          </div>
+                          </div> -->
                         </div>
                       </div>
                     </div>
