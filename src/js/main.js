@@ -392,7 +392,7 @@ const dischargeCargoHumanReadable = (number, data) => {
         ", COB: " +
         (data["dq" + number] || "") +
         ", Started: " +
-        (data["ds" + number] ? formatDate(data["dc" + number]) : "") +
+        (data["ds" + number] ? formatDate(data["ds" + number]) : "") +
         ", Finished: " +
         (data["df" + number] ? formatDate(data["df" + number]) : "")
       : ""
