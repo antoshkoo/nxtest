@@ -280,7 +280,7 @@
                                   type="radio"
                                   name="latSn"
                                   value="N"
-                                  id="N"
+                                  id="n"
                                   checked
                                 />
                                 <label class="form-check-label" for="N">
@@ -293,7 +293,7 @@
                                   type="radio"
                                   name="latSn"
                                   value="S"
-                                  id="S"
+                                  id="s"
                                 />
                                 <label class="form-check-label" for="S">
                                   S
@@ -326,7 +326,7 @@
                                   type="radio"
                                   name="longEw"
                                   value="E"
-                                  id="E"
+                                  id="e"
                                   checked
                                 />
                                 <label class="form-check-label" for="E">
@@ -339,7 +339,7 @@
                                   type="radio"
                                   name="longEw"
                                   value="W"
-                                  id="W"
+                                  id="w"
                                 />
                                 <label class="form-check-label" for="W">
                                   W
@@ -402,7 +402,7 @@
                                   id="est"
                                   checked
                                 />
-                                <label class="form-check-label" for="N">
+                                <label class="form-check-label" for="est">
                                   EST
                                 </label>
                               </div>
@@ -414,7 +414,7 @@
                                   value="FACT"
                                   id="fact"
                                 />
-                                <label class="form-check-label" for="W">
+                                <label class="form-check-label" for="fact">
                                   FACT
                                 </label>
                               </div>
@@ -1090,7 +1090,7 @@
                                   type="radio"
                                   name="latSn"
                                   value="N"
-                                  id="N"
+                                  id="n"
                                   checked
                                 />
                                 <label class="form-check-label" for="N">
@@ -1103,7 +1103,7 @@
                                   type="radio"
                                   name="latSn"
                                   value="S"
-                                  id="S"
+                                  id="s"
                                 />
                                 <label class="form-check-label" for="S">
                                   S
@@ -1136,7 +1136,7 @@
                                   type="radio"
                                   name="longEw"
                                   value="E"
-                                  id="E"
+                                  id="e"
                                   checked
                                 />
                                 <label class="form-check-label" for="E">
@@ -1149,7 +1149,7 @@
                                   type="radio"
                                   name="longEw"
                                   value="W"
-                                  id="W"
+                                  id="w"
                                 />
                                 <label class="form-check-label" for="W">
                                   W
@@ -2718,15 +2718,19 @@
                                 name="br1"
                                 required
                               >
-                                <option value="Name" hidden disabled>
+                                <option value="Name" hidden selected>
                                   Name
                                 </option>
-                                <option value="ifo380">IFO380</option>
-                                <option value="ifo180">IFO180</option>
-                                <option value="vlsfo">VLSFO</option>
-                                <option value="ulsfo">ULSFO</option>
-                                <option value="mgo">MGO</option>
-                                <option value="mdo">MDO</option>
+                                <option value="ifo380" id="bifo380">
+                                  IFO380
+                                </option>
+                                <option value="ifo180" id="bifo180">
+                                  IFO180
+                                </option>
+                                <option value="vlsfo" id="bvlsfo">VLSFO</option>
+                                <option value="ulsfo" id="bulsfo">ULSFO</option>
+                                <option value="mgo" id="bmgo">MGO</option>
+                                <option value="mdo" id="bmdo">MDO</option>
                               </select>
                             </div>
                             <div class="col">
@@ -2756,14 +2760,18 @@
                           </div>
                           <div class="row item-second">
                             <div class="col">
-                              <select class="form-select" name="br2">
+                              <select class="form-select" id="br2" name="br2">
                                 <option hidden>#2</option>
-                                <option value="ifo380">IFO380</option>
-                                <option value="ifo180">IFO180</option>
-                                <option value="vlsfo">VLSFO</option>
-                                <option value="ulsfo">ULSFO</option>
-                                <option value="mgo">MGO</option>
-                                <option value="mdo">MDO</option>
+                                <option value="ifo380" id="bifo380">
+                                  IFO380
+                                </option>
+                                <option value="ifo180" id="bifo180">
+                                  IFO180
+                                </option>
+                                <option value="vlsfo" id="bvlsfo">VLSFO</option>
+                                <option value="ulsfo" id="bulsfo">ULSFO</option>
+                                <option value="mgo" id="bmgo">MGO</option>
+                                <option value="mdo" id="bmdo">MDO</option>
                               </select>
                             </div>
                             <div class="col">
@@ -2789,14 +2797,18 @@
                           </div>
                           <div class="row item-third">
                             <div class="col">
-                              <select class="form-select" name="br3">
+                              <select class="form-select" id="br3" name="br3">
                                 <option hidden>#3</option>
-                                <option value="ifo380">IFO380</option>
-                                <option value="ifo180">IFO180</option>
-                                <option value="vlsfo">VLSFO</option>
-                                <option value="ulsfo">ULSFO</option>
-                                <option value="mgo">MGO</option>
-                                <option value="mdo">MDO</option>
+                                <option value="ifo380" id="bifo380">
+                                  IFO380
+                                </option>
+                                <option value="ifo180" id="bifo180">
+                                  IFO180
+                                </option>
+                                <option value="vlsfo" id="bvlsfo">VLSFO</option>
+                                <option value="ulsfo" id="bulsfo">ULSFO</option>
+                                <option value="mgo" id="bmgo">MGO</option>
+                                <option value="mdo" id="bmdo">MDO</option>
                               </select>
                             </div>
                             <div class="col">

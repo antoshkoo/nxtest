@@ -338,8 +338,20 @@ const setLoadedDataToForm = (data) => {
   }
   for (let key in data) {
     if (data.key === "") return;
-    const elem = document.querySelector(`#form${currentPage} #${key}`) || false;
-    if (elem) elem.value = data[key];
+    if (key === "latSn" || key === "longEw" || key === "departureEstFact") {
+      setFromRadio(key, data);
+    } else if (key === "br1" || key === "br2" || key === "br3") {
+      if (!data[key].startsWith("#")) {
+        const elem = document.querySelector(
+          `#form${currentPage} #${key} #b${data[key]}`
+        );
+        elem.selected = true;
+      }
+    } else {
+      const elem =
+        document.querySelector(`#form${currentPage} #${key}`) || false;
+      if (elem) elem.value = data[key];
+    }
     // copyTextarea.innerText = "";
     // copyTextarea.insertAdjacentHTML("afterBegin", getFormData());
     // copyTextarea.insertAdjacentHTML("afterBegin", "------\n");
@@ -468,6 +480,13 @@ const bunkerValidity = () => {
   selected.options[selected.selectedIndex].text === "Name"
     ? selected.classList.add("error-select")
     : selected.classList.remove("error-select");
+};
+
+const setFromRadio = (key, data) => {
+  const elem = document.querySelector(
+    `#form${currentPage} #${data[key].toLowerCase()}`
+  );
+  elem.checked = true;
 };
 
 // const unblockNextRow = (number, data) => {
