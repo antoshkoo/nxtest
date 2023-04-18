@@ -4,7 +4,7 @@ import { Tab, Card } from "bootstrap";
 import { saveAs } from "file-saver";
 
 const _email =
-  "a.kholin@pola-rise.ru,operating@pola-rise.ru,chartering@pola-rise.ru";
+  "a.kholin@pola-rise.ru;operating@pola-rise.ru;chartering@pola-rise.ru";
 const _emailCC = "vrs@pola-rise.ru";
 
 let currentPage = "Sailing";
@@ -24,6 +24,12 @@ let copyTextarea,
   inputLat,
   spanLat,
   inputLong,
+  ifo380,
+  ifo180,
+  vlsfo,
+  ulsfo,
+  mgo,
+  mdo,
   spanLong;
 
 const getElements = (page) => {
@@ -46,6 +52,12 @@ const getElements = (page) => {
   spanLat = document.querySelector(`#form${currentPage} .lat-span`);
   inputLong = document.querySelector(`#form${currentPage} .long-input`);
   spanLong = document.querySelector(`#form${currentPage} .long-span`);
+  ifo380 = document.querySelector(`#form${currentPage} #ifo380`);
+  ifo180 = document.querySelector(`#form${currentPage} #ifo180`);
+  vlsfo = document.querySelector(`#form${currentPage} #vlsfo`);
+  ulsfo = document.querySelector(`#form${currentPage} #ulsfo`);
+  mgo = document.querySelector(`#form${currentPage} #mgo`);
+  mdo = document.querySelector(`#form${currentPage} #mdo`);
 };
 
 const setListeners = () => {
@@ -62,13 +74,15 @@ const setListeners = () => {
     robValidity();
   });
 
-  saveBtn.addEventListener("click", (e) => {
-    if (!form.checkValidity()) return;
+  saveBtn.addEventListener("click", () => {
+    // if (!form.checkValidity()) return;
     saveReport();
   });
 
   mailBtn.addEventListener("click", () => {
     if (!form.checkValidity()) return;
+    setVesselToLocalStorage();
+    setReportToLocalStorage();
     sendMail();
   });
 
@@ -112,6 +126,12 @@ const setVesselToLocalStorage = () => {
     vesselMmsi: vesselMmsi.value || "",
     voyageNumber: voyageNumber.value || "",
     vesselLocalTime: vesselLocalTime.value || "",
+    ifo380: ifo380.value || "",
+    ifo180: ifo180.value || "",
+    vlsfo: vlsfo.value || "",
+    ulsfo: ulsfo.value || "",
+    mgo: mgo.value || "",
+    mdo: mdo.value || "",
   };
   localStorage.setItem("vessel", JSON.stringify(vesselData));
 };
@@ -340,6 +360,12 @@ const setLastVesselAndLastReportData = () => {
     vesselMmsi.value = data.vesselMmsi || "";
     voyageNumber.value = data.voyageNumber || "";
     vesselLocalTime.value = data.vesselLocalTime || "";
+    ifo380.value = data.ifo380 || "";
+    ifo180.value = data.ifo180 || "";
+    vlsfo.value = data.vlsfo || "";
+    ulsfo.value = data.ulsfo || "";
+    mgo.value = data.mgo || "";
+    mdo.value = data.mdo || "";
   }
   copyTextarea.insertAdjacentHTML("afterBegin", getFormData());
   copyTextarea.insertAdjacentHTML("afterBegin", "------\n");
