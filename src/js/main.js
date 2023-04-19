@@ -182,8 +182,8 @@ ${latLong}
 Next waypoint: ${data.nextRiverCanal || ""}, ETA: ${
         data.etaNextRiverCanalLT ? formatDate(data.etaNextRiverCanalLT) : ""
       }
-Next port: ${data.nextPort || ""}, ETA: ${
-        data.etaNextPortLT ? formatDate(data.etaNextPortLT) : ""
+Destination port: ${data.destinationPort || ""}, ETA: ${
+        data.etaDestinationPortLT ? formatDate(data.etaDestinationPortLT) : ""
       }
 AVRPM: ${data.rpmLastReport || ""}
 Average speed: ${data.avSpeed || ""}

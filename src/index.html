@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Captain report</title>
+    <title>Master Reporting Tool</title>
   </head>
   <body>
     <div class="container-fluid container-xxl py-4 px-3 mx-auto">
@@ -1196,28 +1196,30 @@
                           </div>
                           <div class="row">
                             <div class="col">
-                              <label for="nextPort" class="form-label"
-                                >Next port</label
+                              <label for="destinationPort" class="form-label"
+                                >Destination port</label
                               >
                               <input
                                 type="text"
                                 class="form-control"
-                                id="nextPort"
-                                name="nextPort"
+                                id="destinationPort"
+                                name="destinationPort"
                                 placeholder="Port name"
                                 required
                               />
                             </div>
                             <div class="col">
-                              <label for="etaNextPortLT" class="form-label"
+                              <label
+                                for="etaDestinationPortLT"
+                                class="form-label"
                                 >ETA (Port LT)</label
                               >
                               <input
                                 type="datetime-local"
                                 max="9999-12-31T23:59"
                                 class="form-control"
-                                id="etaNextPortLT"
-                                name="etaNextPortLT"
+                                id="etaDestinationPortLT"
+                                name="etaDestinationPortLT"
                                 placeholder="00/00/0000 00:00"
                                 required
                               />
