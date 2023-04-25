@@ -4,8 +4,8 @@ import { Tab, Card } from "bootstrap";
 import { saveAs } from "file-saver";
 
 const _email =
-  "a.kholin@pola-rise.ru;operating@pola-rise.ru;chartering@pola-rise.ru";
-const _emailCC = "vrs@pola-rise.ru";
+  "a.kholin@idel-shipping.ru;o.popova@idel-shipping.ru;office@idel-shipping.ru";
+const _emailCC = "vrs@idel-shipping.ru";
 
 let currentPage = "Sailing";
 let copyTextarea,
