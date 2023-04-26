@@ -7,6 +7,10 @@ const _email =
   "a.kholin@idel-shipping.ru;o.popova@idel-shipping.ru;office@idel-shipping.ru";
 const _emailCC = "vrs@idel-shipping.ru";
 
+// const _email =
+//   "a.kholin@pola-rise.ru;operating@pola-rise.ru;chartering@pola-rise.ru";
+// const _emailCC = "vrs@pola-rise.ru";
+
 let currentPage = "Sailing";
 let copyTextarea,
   saveBtn,
@@ -30,6 +34,9 @@ let copyTextarea,
   ulsfo,
   mgo,
   mdo,
+  oilme,
+  oilae,
+  fw,
   // itemSecond,
   // itemThird,
   spanLong;
@@ -58,6 +65,9 @@ const getElements = (page) => {
   ulsfo = document.querySelector(`#form${currentPage} #ulsfo`);
   mgo = document.querySelector(`#form${currentPage} #mgo`);
   mdo = document.querySelector(`#form${currentPage} #mdo`);
+  oilme = document.querySelector(`#form${currentPage} #oilme`);
+  oilae = document.querySelector(`#form${currentPage} #oilae`);
+  fw = document.querySelector(`#form${currentPage} #fw`);
   // itemSecond = document.querySelector(`#form${currentPage} .item-second`) || "";
   // itemThird = document.querySelector(`#form${currentPage} .item-third`) || "";
 };
@@ -134,6 +144,9 @@ const setVesselToLocalStorage = () => {
     ulsfo: ulsfo.value || "",
     mgo: mgo.value || "",
     mdo: mdo.value || "",
+    oilme: oilme.value || "",
+    oilae: oilae.value || "",
+    fw: fw.value || "",
   };
   localStorage.setItem("vessel", JSON.stringify(vesselData));
 };
@@ -171,7 +184,10 @@ IFO180: ${data.ifo180 ? data.ifo180 + " MT" : ""}
 VLSFO: ${data.vlsfo ? data.vlsfo + " MT" : ""}
 ULSFO: ${data.ulsfo ? data.ulsfo + " MT" : ""}
 MGO: ${data.mgo ? data.mgo + " MT" : ""}
-MDO: ${data.mdo ? data.mdo + " MT" : ""}`;
+MDO: ${data.mdo ? data.mdo + " MT" : ""}
+LOil (ME): ${data.oilme ? data.oilme + " MT" : ""}
+LOil (AE): ${data.oilae ? data.oilae + " MT" : ""}
+FW: ${data.fw ? data.fw + " MT" : ""}`;
 
   switch (currentPage) {
     case "Sailing":
@@ -305,10 +321,10 @@ const getReportName = () => {
 
 const sendMail = () => {
   const reportName = getReportName();
-  const body = copyTextarea.value.replace(/\n\r?/g, "%0D");
+  const body = copyTextarea.value.replace(/\n\r?/g, "%0D%0A");
   setTimeout(
     () =>
-      (document.location.href = `mailto:${_email}?subject=${reportName}&body=${body}&cc=${_emailCC}`),
+      (document.location.href = `mailto:${_email}?cc=${_emailCC}&subject=${reportName}&body=${body}`),
     250
   );
 };
@@ -396,6 +412,9 @@ const setLastVesselAndLastReportData = () => {
     ulsfo.value = data.ulsfo || "";
     mgo.value = data.mgo || "";
     mdo.value = data.mdo || "";
+    oilme.value = data.oilme || "";
+    oilae.value = data.oilae || "";
+    fw.value = data.fw || "";
   }
   copyTextarea.insertAdjacentHTML("afterBegin", getFormData());
   copyTextarea.insertAdjacentHTML("afterBegin", "------\n");
